@@ -10,6 +10,9 @@
 project:
   type: book
   output-dir: docs
+  # resources:  # in case something was not included in rendered site automatically
+  #   - "data/*"
+  #   - "images/*"
 
 
 
@@ -54,7 +57,8 @@ book:
     #     href: "https://link-to-tool"
 
   chapters:
-    - index.qmd
+    - text: "Welcome"
+      href: index.qmd
 
     - part: "TidyTuesday"
       chapters:
@@ -93,6 +97,10 @@ format:
     code-tools: true
     page-layout: full
     code-fold: true
+    # grid:
+    #   sidebar-width: 200px
+    #   body-width: 950px
+    #   margin-width: 150px
 
   # pdf:
   #   documentclass: scrreprt
@@ -104,7 +112,7 @@ execute:
   echo: true
   warning: false
   error: false
-  cache: true
+  cache: false
 #   freeze: auto # remove when using GitHub action to execute code
 
 
