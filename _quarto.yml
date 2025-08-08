@@ -73,6 +73,7 @@ book:
   appendices:
   - src/appx/appx-sample1.qmd
   - src/appx/appx-sample2.qmd
+  - mm/mm.md
 
 
 

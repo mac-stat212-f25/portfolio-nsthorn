@@ -1,0 +1,1 @@
+Save mind map images in this folder. Name each file `MMDD-short_title.png`, using the month and day of the pre-class learning assignment. For instance, a mind map for 'Files' assigned on August 2nd would be named `0802-files.jpg`.  Follow the example shown in the `mm.md` file to show your mind map images in open place.
