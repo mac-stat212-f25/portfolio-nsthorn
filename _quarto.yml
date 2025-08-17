@@ -60,6 +60,10 @@ book:
     - text: "Welcome"
       href: index.qmd
 
+    - part: "Prof Viz"
+      chapters:
+      - src/pv/pv-01.qmd
+
     - part: "TidyTuesday"
       chapters:
       - src/tt/2025-07-08.qmd
