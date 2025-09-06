@@ -40,6 +40,7 @@ Carryout the following steps to clean and save the San Francisco Weather data.  
 
 
 ```{r}
+# Solving Questions
 raw_weather <- read.csv("../../data/raw/weather.csv")
 clean_weather <- raw_weather %>% 
   mutate(PrecipYr = na_if(PrecipYr, 99999)) %>%
