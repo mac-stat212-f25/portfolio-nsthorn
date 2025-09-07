@@ -43,6 +43,28 @@
     ]
   },
   {
+    "objectID": "src/ica/cleaning.html",
+    "href": "src/ica/cleaning.html",
+    "title": "Cleaning SFO Weather Data",
+    "section": "",
+    "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode\n# Solving Questions\nraw_weather &lt;- read.csv(\"../../data/raw/weather.csv\")\nclean_weather &lt;- raw_weather %&gt;% \n  mutate(PrecipYr = na_if(PrecipYr, 99999)) %&gt;%\n  mutate(dateInYear = yday(as_date(date, format = ('%m/%d/%y')))) %&gt;% \n  mutate(month_name = month.abb[Month])\nwrite.csv(clean_weather, \"../../data/processed/weather_clean.csv\")",
+    "crumbs": [
+      "In-Class Activities",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
+    ]
+  },
+  {
+    "objectID": "src/ica/cleaning.html#exercise",
+    "href": "src/ica/cleaning.html#exercise",
+    "title": "Cleaning SFO Weather Data",
+    "section": "",
+    "text": "Read in the weather data in this file with the correct relative file path after you move it to the instructed location.\nThere is a variable that has values that don’t make sense in the data context. Figure out which variable this is and clean it up by making those values missing using na_if().\nCreate a variable called dateInYear that indicates the day of the year (1-365) for each case. (Jan 1 should be 1, and Dec 31 should be 365).\nCreate a variable called month_name that shows the 3-letter abbreviation for each case.\nSave the wrangled data to the data/processed/ folder using write_csv(). Name this file weather_clean.csv. Look up the documentation for this function by typing ?write_csv in the Console. You’ll need to write an appropriate relative path.",
+    "crumbs": [
+      "In-Class Activities",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
+    ]
+  },
+  {
     "objectID": "src/ica/ica-sample1.html",
     "href": "src/ica/ica-sample1.html",
     "title": "ICA Sample 1",
@@ -50,7 +72,7 @@
     "text": "Add content here",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ICA Sample 1</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>ICA Sample 1</span>"
     ]
   },
   {
@@ -61,7 +83,7 @@
     "text": "Add content here",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>ICA Sample 2</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>ICA Sample 2</span>"
     ]
   },
   {
