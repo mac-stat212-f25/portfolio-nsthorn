@@ -104,7 +104,8 @@ frogID_data %>%
   labs(title = "Distribution of Frog Genera in FrogID Recordings")+
   xlab("Province Name")+
   ylab("Proportion of Frog Recordings")+
-  theme_classic()
+  theme_classic()+
+  scale_fill_viridis_d()
   
 ```
 
