@@ -41,7 +41,7 @@ FrogID can provide interesting insights into the life of frogs, including where 
 Collection of this data could help conservationists focus there target areas to those that would help the largest number of frog species.
 
 
-```{r fig.alt = "The Bargraph shows the number of frog recordings in each Austrialian province. The province with the most recordings is New South Wales with just under 60000 recorings. The rest, in decending order as Victoria, Queensland, Western Australia, South Ausstralia, Tasmania, Northern Territory, Austrailian Capital Terriroy, and the Other Territories.", fig.cap = "Bargraph displaying the number of frog recordings in each Australian province"}
+```{r fig.alt = "The Bargraph shows the number of frog recordings in each Austrialian province. The province with the most recordings is New South Wales with just under 60000 recorings. The rest, in decending order as Victoria, Queensland, Western Australia, South Ausstralia, Tasmania, Northern Territory, Austrailian Capital Terriroy, and the Other Territories.", fig.cap = "Bargraph displaying the number of frog recordings in each Australian province. Nico Thorn 9/9/2025 Source: TidyTuesday"}
 frogID_data %>% 
   count(stateProvince) %>% 
   arrange(desc(n)) %>% 
@@ -54,7 +54,7 @@ ggplot(aes(x = reorder(stateProvince, -n), y = n))+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-```{r fig.cap = "Map of Frog Recording Locations", fig.alt= "Map displays location of FrogID recordings. Most of the recordings seem to be around the coast line areas of Australia, and away from the desert."}
+```{r fig.cap = "Map of Frog Recording Locations Nico Thorn 9/9/2025 Source: TidyTuesday", fig.alt= "Map displays location of FrogID recordings. Most of the recordings seem to be around the coast line areas of Australia, and away from the desert."}
 title <- "
 <style>
   .custom-title {
@@ -95,17 +95,18 @@ Given that many frogs require high levels of moisture and humidity in their envi
 
 In addition to knowing where the frogs are located, knowing the different types of frogs in an ecosystem can also be vital for conservationist efforts.
 
-```{r fig.cap = "Proportional bar chart of the different frog genera in the three provinces with the most frog recordings.", fig.alt="rPoportional bar chart of the different frog genera in the three provinces with the most frog recordings. All three of these provinces, Litoria, Crinia, Limnodynastes where among the top three most prevalent frog Genera"}
+```{r fig.cap = "Bar charts of the different frog genera in the three provinces with the most frog recordings. Nico Thorn 9/9/2025 Source: TidyTuesday", fig.alt="Bar charts of the different frog genera in the three provinces with the most frog recordings. All three of these provinces, Litoria, Crinia, Limnodynastes where among the top three most prevalent frog Genera"}
 frogID_data %>% 
   filter(stateProvince %in% c("New South Wales", "Victoria", "Queensland" )) %>%
   separate(scientificName, c("genus", "Species"), sep = " ") %>% 
-  ggplot(aes(x = stateProvince, fill = genus)) +
-  geom_bar(position = "fill")+
+  ggplot(aes(x = stateProvince)) +
+  geom_bar()+
+  facet_wrap(~genus)+
   labs(title = "Distribution of Frog Genera in FrogID Recordings")+
   xlab("Province Name")+
-  ylab("Proportion of Frog Recordings")+
+  ylab("Number of Frog Recordings")+
   theme_classic()+
-  scale_fill_viridis_d()
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
 ```
 
