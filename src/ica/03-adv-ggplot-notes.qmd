@@ -150,7 +150,7 @@ In your visualization, also display the usual temperatures (`NormalLow` and `Nor
 ggplot(weather, aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh)) +
   geom_linerange(color = "#ECEBE3")+
   geom_ribbon(aes(ymin = NormalLow, ymax = NormalHigh), fill = "#C8B8BA")+
-  geom_linerange(aes(ymax= High, ymin = Low), color = "#A90248")+
+  geom_linerange(aes(ymax= High, ymin = Low), color = "#A90248", linewidth =0.75)+
   theme_classic()
 
 ```
@@ -165,8 +165,27 @@ If you'd like finer control of the width of these lines/rectangles, check out th
 
 Recreate the visual demarcations of the months by adding vertical lines separating the months.  Brainstorm how we might draw those vertical lines. What `geom` might we use?  What subset of the data might we use in that `geom` layer to draw lines only at the month divisions? 
 
-```{r }
+```{r}
+first_of_month <- weather %>% 
+  filter(Day == 1) %>% 
+  select(dateInYear)
 
+first_of_month <- pull(first_of_month)
+
+fifteen_of_each_month <- weather %>% 
+  filter(Day == 15) %>% 
+  select(dateInYear)
+
+fifteen_of_each_month <- pull(fifteen_of_each_month)
+```
+
+```{r}
+ggplot(weather, aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh)) +
+  geom_linerange(color = "#ECEBE3", linewidth = 0.85)+
+  geom_ribbon(aes(ymin = NormalLow, ymax = NormalHigh), fill = "#C8B8BA")+
+  geom_linerange(aes(ymax= High, ymin = Low), color = "#A90248", linewidth = 0.85)+
+  geom_vline(xintercept = first_of_month, color = "grey", alpha = 0.5, linetype ="dashed")+
+  theme_classic()
 
 ```
 
@@ -188,6 +207,17 @@ Try to figuring out this new challenge using search engines and LLMs:
 - **LLMs.** Use [ChatGPT](https://chat.openai.com/) or [Gemini](https://gemini.google.com/) with prompts that will most efficiently get you the desired results. Record the chat prompts used and output given. Evaluate the output. Do you fully understand the code generated? How can you tell that the generated code is correct?
 
 
+```{r}
+ggplot(weather, aes(x = dateInYear, ymin = RecordLow, ymax = RecordHigh)) +
+  geom_linerange(color = "#ECEBE3")+
+  geom_ribbon(aes(ymin = NormalLow, ymax = NormalHigh), fill = "#C8B8BA")+
+  geom_linerange(aes(ymax= High, ymin = Low), color = "#A90248")+
+  geom_vline(xintercept = first_of_month, color = "grey", alpha = 0.5, linetype ="dashed")+
+  scale_x_continuous(labels = month.abb, breaks = fifteen_of_each_month)+
+  theme_classic()
+```
+
+
 ## Exercise 6 
 
 Create a precipitation plot that looks like the following.  Note that 
@@ -200,7 +230,22 @@ Create a precipitation plot that looks like the following.  Note that
 
 
 ```{r weather_plot_precip}
+record_precp <- weather %>% 
+  filter(RecordP == "TRUE")
 
+total_precp <- weather %>% 
+  group_by(Month) %>% 
+  summarise(precip_total = sum(Precip), dateInYear = max(dateInYear))
+
+precip_per_day <- weather |>
+  select(dateInYear, CulmPrec) |> 
+  right_join(total_precp)
+
+ggplot() +
+  geom_area(data = weather, aes(x = dateInYear, y = CulmPrec),fill = "#ebeae2", color = "#32a3d8")+
+  geom_point(data = record_precp, aes(x= dateInYear, y = CulmPrec), shape = 25, fill = "black", vjust = -1)+
+  geom_text(data = precip_per_day, aes(x = dateInYear, y= CulmPrec, label = precip_total), size = 2.5, vjust =-0.5, hjust = 0.85)+
+  theme_classic()
 ```
 ## Done!
 
