@@ -11,3 +11,7 @@
 ![MMDD-0911-CRS.png](MMDD-0911-CRS.png)
 
 ![MMDD-0917-wrangle.png](MMDD-0917-wrangle.png)
+
+![MMDD-0929-missing.png](MMDD-0929-missing.png)
+
+![MMDD-1001-functions.png](MMDD-1001-functions.png)
