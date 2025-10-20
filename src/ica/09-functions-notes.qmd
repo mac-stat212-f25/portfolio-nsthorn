@@ -403,20 +403,37 @@ group_means <- function(df, group_var, mean_var) {
         group_by(pick({{ group_var }})) |>
         summarize(mean = mean({{ mean_var }}))
 }
+
+group_means(diamonds, carat, price)
 ```
 
 
 6. **Prop function** Create a new version of `dplyr::count()` that also shows proportions instead of just sample sizes. The function should be able to handle counting by multiple variables. Test your function with two different sets of arguments using the `diamonds` dataset.
 
 ```{r}
+prop_function <- function(df, variables){
+  df |> 
+    group_by(pick({{variables}})) |> 
+    summarize(count = n()) |> 
+    mutate(prop = count / nrow(df))
+}
 
+prop_function(diamonds, c(cut))
+prop_function(diamonds, c(cut, carat))
 ```
 
 7. **Scatterplot + Smooth function** Create a function that creates a scatterplot from a user-supplied dataset with user-supplied x and y variables. The plot should also show a curvy smoothing line in blue, and a linear smoothing line in red. Test your function using the `diamonds` dataset.
 
 
 ```{r}
+scatter_plot <- function(df, x, y){
+  ggplot(df, aes(x ={{x}}, y = {{y}})) +
+    geom_point()+
+    geom_smooth()+
+    geom_smooth(method = 'lm', color = 'red')
+}
 
+scatter_plot(diamonds, carat, price)
 ```
 ## Done!
 

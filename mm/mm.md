@@ -15,3 +15,7 @@
 ![MMDD-0929-missing.png](MMDD-0929-missing.png)
 
 ![MMDD-1001-functions.png](MMDD-1001-functions.png)
+
+![MMDD-1003-baser.png](MMDD-1003-baser.png)
+
+![MMDD-1006-loops.png](MMDD-1006-loops.png)
