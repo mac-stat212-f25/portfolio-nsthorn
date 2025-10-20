@@ -948,25 +948,16 @@ cookieconsent.run({
 <span id="cb19-42"><a href="#cb19-42"></a>    )</span>
 <span id="cb19-43"><a href="#cb19-43"></a>}</span>
 <span id="cb19-44"><a href="#cb19-44"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>   user  system elapsed 
- 409.79   18.37  492.06 </code></pre>
-</div>
+</details>
 </div>
 <p>Below we compute the confidence interval (CI) coverage probability (fraction of times the CI contains the true value of <code>1</code>) for the CIs generated from single and multiple imputation:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>ci_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ci_list)</span>
-<span id="cb21-2"><a href="#cb21-2"></a>ci_data <span class="sc">|&gt;</span> </span>
-<span id="cb21-3"><a href="#cb21-3"></a>    <span class="fu">mutate</span>(<span class="at">contains_truth =</span> ci_lower <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> ci_upper <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb21-4"><a href="#cb21-4"></a>    <span class="fu">group_by</span>(which_imp) <span class="sc">|&gt;</span> </span>
-<span id="cb21-5"><a href="#cb21-5"></a>    <span class="fu">summarize</span>(<span class="at">frac_contains_truth =</span> <span class="fu">mean</span>(contains_truth))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  which_imp frac_contains_truth
-  &lt;chr&gt;                   &lt;dbl&gt;
-1 multiple                0.947
-2 single                  0.902</code></pre>
-</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>ci_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ci_list)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>ci_data <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="fu">mutate</span>(<span class="at">contains_truth =</span> ci_lower <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> ci_upper <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a href="#cb20-4"></a>    <span class="fu">group_by</span>(which_imp) <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="fu">summarize</span>(<span class="at">frac_contains_truth =</span> <span class="fu">mean</span>(contains_truth))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="done" class="level2"><h2 class="anchored" data-anchor-id="done">Done!</h2>
 <ul>
@@ -1454,397 +1445,397 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1"></a><span class="co">---</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="an">title:</span><span class="co"> "8 Missing Data"</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="co">---</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a></span>
-<span id="cb23-5"><a href="#cb23-5"></a></span>
-<span id="cb23-6"><a href="#cb23-6"></a><span class="in">```{r doc_setup_08, echo=FALSE, message=FALSE}</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb23-8"><a href="#cb23-8"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb23-9"><a href="#cb23-9"></a><span class="fu">library</span>(mice)</span>
-<span id="cb23-10"><a href="#cb23-10"></a><span class="in">```</span></span>
-<span id="cb23-11"><a href="#cb23-11"></a></span>
-<span id="cb23-12"><a href="#cb23-12"></a><span class="fu">## 🧩 Learning Goals</span></span>
-<span id="cb23-13"><a href="#cb23-13"></a></span>
-<span id="cb23-14"><a href="#cb23-14"></a>By the end of this lesson, you should be able to:</span>
-<span id="cb23-15"><a href="#cb23-15"></a></span>
-<span id="cb23-16"><a href="#cb23-16"></a><span class="ss">- </span>Go through a data quality checklist when data wrangling</span>
-<span id="cb23-17"><a href="#cb23-17"></a><span class="ss">- </span>Explain the difference between MCAR, MAR, and MNAR missing data mechanisms</span>
-<span id="cb23-18"><a href="#cb23-18"></a><span class="ss">- </span>Assess what missing data mechanisms might be at play in a given dataset</span>
-<span id="cb23-19"><a href="#cb23-19"></a><span class="ss">- </span>Use visualizations to explore missing data patterns</span>
-<span id="cb23-20"><a href="#cb23-20"></a><span class="ss">- </span>Explain why multiple imputation is preferred to single imputation</span>
-<span id="cb23-21"><a href="#cb23-21"></a><span class="ss">- </span>Explain how a simulation study can be used to investigate properties of statistical methods</span>
-<span id="cb23-22"><a href="#cb23-22"></a></span>
-<span id="cb23-23"><a href="#cb23-23"></a></span>
-<span id="cb23-24"><a href="#cb23-24"></a><span class="fu">## Data Quality Checklist </span></span>
-<span id="cb23-25"><a href="#cb23-25"></a></span>
-<span id="cb23-26"><a href="#cb23-26"></a>When wrangling / cleaning data, make sure to check the assumptions you make about the data to ensure you don't lose data quality.</span>
-<span id="cb23-27"><a href="#cb23-27"></a></span>
-<span id="cb23-28"><a href="#cb23-28"></a></span>
-<span id="cb23-29"><a href="#cb23-29"></a>:::{.incremental}</span>
-<span id="cb23-30"><a href="#cb23-30"></a>**Data Parsing** (reading data into a different data format)</span>
-<span id="cb23-31"><a href="#cb23-31"></a></span>
-<span id="cb23-32"><a href="#cb23-32"></a><span class="ss">- </span>Always keep the original, raw data (don't manually change it).</span>
-<span id="cb23-33"><a href="#cb23-33"></a><span class="ss">- </span>Use Test Cases: Find rows or write test cases to double check the wrangling works as expected</span>
-<span id="cb23-34"><a href="#cb23-34"></a><span class="ss">- </span>DATES: When using <span class="in">`lubridate`</span> to parse dates and times, ensure the strings are consistently ordered and formatted correctly, eg,  mm/dd/yy vs. dd/mm/yy. </span>
-<span id="cb23-35"><a href="#cb23-35"></a><span class="ss">- </span>STRINGS: When using <span class="in">`stringr`</span> to parse strings with regular expressions, check example rows to ensure that the pattern captured all of the examples you want and excluded the patterns you don't want.</span>
-<span id="cb23-36"><a href="#cb23-36"></a><span class="ss">- </span>Always check for missing values to see if the missing ones are expected given the original data.</span>
-<span id="cb23-37"><a href="#cb23-37"></a></span>
-<span id="cb23-38"><a href="#cb23-38"></a>:::</span>
-<span id="cb23-39"><a href="#cb23-39"></a></span>
-<span id="cb23-40"><a href="#cb23-40"></a>**Data Joining**</span>
-<span id="cb23-41"><a href="#cb23-41"></a></span>
-<span id="cb23-42"><a href="#cb23-42"></a>:::{.incremental}</span>
-<span id="cb23-43"><a href="#cb23-43"></a></span>
-<span id="cb23-44"><a href="#cb23-44"></a><span class="ss">- </span>Identify missing values in the key variables and decide how to handle them before the merge process (e.g., omitting rows with missing values, imputing missing values).</span>
-<span id="cb23-45"><a href="#cb23-45"></a><span class="ss">- </span>Decide on the correct join type (left, right, inner, full, etc.) OR if the data structure is the same use <span class="in">`list_rbind()`</span> to bind rows or <span class="in">`list_cbind()`</span> to bind columns.</span>
-<span id="cb23-46"><a href="#cb23-46"></a><span class="ss">- </span>If doing a join, make sure that the key variables (<span class="in">`by`</span>) have the same meaning in both datasets and are represented in the same way (e.g., id = 1 to 20 in first dataset will match id = 1 - 20 in undesirable ways)</span>
-<span id="cb23-47"><a href="#cb23-47"></a><span class="ss">- </span>Predict the number of rows that will result from the join and double check the <span class="in">`anti_join()`</span> to see which rows did not find a match.</span>
-<span id="cb23-48"><a href="#cb23-48"></a><span class="ss">- </span>Check for duplicate records within each dataset and ensure they are handled appropriately before merging.</span>
-<span id="cb23-49"><a href="#cb23-49"></a><span class="ss">- </span>Verify that the merged dataset maintains consistency with the original datasets in terms of data values, variable names, and variable types.</span>
-<span id="cb23-50"><a href="#cb23-50"></a><span class="ss">- </span>Perform some preliminary analysis or validation checks on the merged dataset to ensure that it meets the requirements of your analysis.</span>
-<span id="cb23-51"><a href="#cb23-51"></a></span>
-<span id="cb23-52"><a href="#cb23-52"></a>:::</span>
-<span id="cb23-53"><a href="#cb23-53"></a></span>
-<span id="cb23-54"><a href="#cb23-54"></a></span>
-<span id="cb23-55"><a href="#cb23-55"></a>**Sanity Check: Visualize your data!!!**</span>
-<span id="cb23-56"><a href="#cb23-56"></a></span>
-<span id="cb23-57"><a href="#cb23-57"></a>:::{.incremental}</span>
-<span id="cb23-58"><a href="#cb23-58"></a><span class="ss">- </span>Do the right number of points appear?</span>
-<span id="cb23-59"><a href="#cb23-59"></a><span class="ss">- </span>Do the values seem reasonable?</span>
-<span id="cb23-60"><a href="#cb23-60"></a>:::</span>
-<span id="cb23-61"><a href="#cb23-61"></a></span>
-<span id="cb23-62"><a href="#cb23-62"></a><span class="fu">## Explicit v. Implicit Missing Data </span></span>
-<span id="cb23-63"><a href="#cb23-63"></a></span>
-<span id="cb23-64"><a href="#cb23-64"></a>**Explicit missing data** is data that is explicitly marked as missing. In R, this is done with <span class="in">`NA`</span>.</span>
-<span id="cb23-65"><a href="#cb23-65"></a></span>
-<span id="cb23-66"><a href="#cb23-66"></a></span>
-<span id="cb23-67"><a href="#cb23-67"></a>**Implicit missing data** is data that is missing but not explicitly marked as such. </span>
-<span id="cb23-68"><a href="#cb23-68"></a></span>
-<span id="cb23-69"><a href="#cb23-69"></a><span class="ss">- </span>This can happen when an entire row is missing from a dataset. </span>
-<span id="cb23-70"><a href="#cb23-70"></a><span class="ss">    - </span>For example, if a study participant doesn't attend a follow-up visit. It maybe not even be recorded in the data.</span>
-<span id="cb23-71"><a href="#cb23-71"></a></span>
-<span id="cb23-72"><a href="#cb23-72"></a>We need to **make implicit missingness explicit** before we can work with the data. </span>
-<span id="cb23-73"><a href="#cb23-73"></a></span>
-<span id="cb23-74"><a href="#cb23-74"></a><span class="ss">- </span>Consider the combinations of variables that you'd expect to be fully present in a complete dataset. </span>
-<span id="cb23-75"><a href="#cb23-75"></a><span class="ss">    - </span>If a combination is missing, you can create a new row with explicit missing values. </span>
-<span id="cb23-76"><a href="#cb23-76"></a><span class="ss">      - </span>For example, if you expect every participant (each has a unique <span class="in">`pid`</span>) to have an observation for each <span class="in">`visit`</span>, you could use the function <span class="in">`complete()`</span> to create that new row and plug in values of <span class="in">`NA`</span> for the missing data.</span>
-<span id="cb23-77"><a href="#cb23-77"></a></span>
-<span id="cb23-78"><a href="#cb23-78"></a><span class="in">```</span></span>
-<span id="cb23-79"><a href="#cb23-79"></a><span class="in">study_data_full &lt;- study_data |&gt; </span></span>
-<span id="cb23-80"><a href="#cb23-80"></a><span class="in">  complete(pid, visit)</span></span>
-<span id="cb23-81"><a href="#cb23-81"></a><span class="in">```</span></span>
-<span id="cb23-82"><a href="#cb23-82"></a></span>
-<span id="cb23-83"><a href="#cb23-83"></a><span class="fu">## Dealing with missing data </span></span>
-<span id="cb23-84"><a href="#cb23-84"></a></span>
-<span id="cb23-85"><a href="#cb23-85"></a>If you have **explicit** missing data, there are 3 main ways of proceeding:</span>
-<span id="cb23-86"><a href="#cb23-86"></a></span>
-<span id="cb23-87"><a href="#cb23-87"></a>::: {.incremental}</span>
-<span id="cb23-88"><a href="#cb23-88"></a></span>
-<span id="cb23-89"><a href="#cb23-89"></a><span class="ss">1. </span>Drop the cases or rows with any missing data from the analysis--a **complete case analysis**</span>
-<span id="cb23-90"><a href="#cb23-90"></a><span class="ss">    -  </span>Pro: Easy to implement</span>
-<span id="cb23-91"><a href="#cb23-91"></a><span class="ss">    -  </span>Con: reduces sample size, introduces bias if the missing data is not "missing completely at random" </span>
-<span id="cb23-92"><a href="#cb23-92"></a>    </span>
-<span id="cb23-93"><a href="#cb23-93"></a><span class="ss">2. </span>Create a category for missing values.</span>
-<span id="cb23-94"><a href="#cb23-94"></a><span class="ss">    - </span>Example: The survey question "What is your gender?" might only provide two possible responses: "male" and "female". Missing values for this could indicate that the respondent uses a non-binary designation. Instead of dropping these cases, treating the missing data as its own category ("Does not wish to answer") would be more appropriate.</span>
-<span id="cb23-95"><a href="#cb23-95"></a><span class="ss">    - </span>Pros: Maintains sample size, may help us if data is "missing not at random"</span>
-<span id="cb23-96"><a href="#cb23-96"></a><span class="ss">    - </span>Cons: Not directly applicable to continuous outcomes (could include interactions with a categorical version in models to account for it)</span>
-<span id="cb23-97"><a href="#cb23-97"></a>    </span>
-<span id="cb23-98"><a href="#cb23-98"></a><span class="ss">3. </span>**Impute** (or fill in values for) the missing data using imputation algorithms.</span>
-<span id="cb23-99"><a href="#cb23-99"></a><span class="ss">    - </span>Imputation algorithms can be as simple as replacing missing values with the mean of the non-missing values (very simplistic).</span>
-<span id="cb23-100"><a href="#cb23-100"></a><span class="ss">    - </span>Regression imputation algorithms use models to predict missing values as a function of other variables in the data.</span>
-<span id="cb23-101"><a href="#cb23-101"></a><span class="ss">    - </span>Pros: Maintains sample size, multiple regression imputation minimizes bias if "missing at random" </span>
-<span id="cb23-102"><a href="#cb23-102"></a><span class="ss">    - </span>Cons: Computationally intensive</span>
-<span id="cb23-103"><a href="#cb23-103"></a>:::</span>
-<span id="cb23-104"><a href="#cb23-104"></a></span>
-<span id="cb23-105"><a href="#cb23-105"></a></span>
-<span id="cb23-106"><a href="#cb23-106"></a>Deciding between these options and proceeding with choosing finer details within an option requires an understanding of the **mechanism** by which data become missing.</span>
-<span id="cb23-107"><a href="#cb23-107"></a></span>
-<span id="cb23-108"><a href="#cb23-108"></a></span>
-<span id="cb23-109"><a href="#cb23-109"></a></span>
-<span id="cb23-110"><a href="#cb23-110"></a><span class="fu">## Missing Data Mechanisms </span></span>
-<span id="cb23-111"><a href="#cb23-111"></a></span>
-<span id="cb23-112"><a href="#cb23-112"></a>The reasons for which a variable might have missing data are divided into 3 mechanisms: MCAR, MAR, and MNAR. </span>
-<span id="cb23-113"><a href="#cb23-113"></a></span>
-<span id="cb23-114"><a href="#cb23-114"></a>Within a dataset, multiple mechanisms may be present--we need to consider the missingness mechanism for each variable individually.</span>
-<span id="cb23-115"><a href="#cb23-115"></a></span>
-<span id="cb23-116"><a href="#cb23-116"></a>::: {.incremental}</span>
-<span id="cb23-117"><a href="#cb23-117"></a><span class="ss">- </span>**Missing completely at random (MCAR)**:</span>
-<span id="cb23-118"><a href="#cb23-118"></a><span class="ss">    - </span>The probability of missing data for a variable is the same for all cases. Implies that causes of the missing data are unrelated to the data. (<span class="ot">&lt;https://stefvanbuuren.name/fimd/sec-MCAR.html&gt;</span>)</span>
-<span id="cb23-119"><a href="#cb23-119"></a><span class="ss">    - </span>Examples:</span>
-<span id="cb23-120"><a href="#cb23-120"></a><span class="ss">        - </span>Measurement device that runs out of batteries causes the remainder of observations for the day to be missing.</span>
-<span id="cb23-121"><a href="#cb23-121"></a><span class="ss">        - </span>Data entry software requires a particular field to be typo-free, and missing values are introduced when there are typos.</span>
-<span id="cb23-122"><a href="#cb23-122"></a><span class="ss">    - </span>Implications for downstream work:</span>
-<span id="cb23-123"><a href="#cb23-123"></a><span class="ss">        - </span>If a variable has MCAR missingness, a complete case analysis will be unbiased (still valid).</span>
-<span id="cb23-124"><a href="#cb23-124"></a><span class="ss">        - </span>However, with a lot of missing observations, a complete case analysis will suffer from loss of statistical power (ability to detect a real difference), and imputation will be useful to retain the original sample size.</span>
-<span id="cb23-125"><a href="#cb23-125"></a></span>
-<span id="cb23-126"><a href="#cb23-126"></a><span class="ss">- </span>**Missing at random (MAR):**</span>
-<span id="cb23-127"><a href="#cb23-127"></a><span class="ss">    - </span>The probability of missing data is related to **observed** variables but unrelated to unobserved information.</span>
-<span id="cb23-128"><a href="#cb23-128"></a><span class="ss">    - </span>Examples:</span>
-<span id="cb23-129"><a href="#cb23-129"></a><span class="ss">        - </span>Blood pressure measurements tend to be missing in patients in worse health. (Those in worse health are more likely to miss clinic visits.) Better and worse health can be measured by a variety of indicators in their health record.</span>
-<span id="cb23-130"><a href="#cb23-130"></a><span class="ss">        - </span>In a survey, older people are more likely to report their income than younger people. Missingness is related to the observed age variable, but not to unobserved information.</span>
-<span id="cb23-131"><a href="#cb23-131"></a><span class="ss">    - </span>Implications for downstream work:</span>
-<span id="cb23-132"><a href="#cb23-132"></a><span class="ss">        - </span>Try to use imputation methods that predict the value of the missing variables from other observed variables. Assessing whether this can be done accurately takes some exploration--we'll explore this shortly.</span>
-<span id="cb23-133"><a href="#cb23-133"></a></span>
-<span id="cb23-134"><a href="#cb23-134"></a><span class="ss">- </span>**Missing not at random (MNAR):**</span>
-<span id="cb23-135"><a href="#cb23-135"></a><span class="ss">    - </span>The probability of missing data is related to **unobserved** variables (and probably observed variables too).</span>
-<span id="cb23-136"><a href="#cb23-136"></a><span class="ss">    - </span>Examples:</span>
-<span id="cb23-137"><a href="#cb23-137"></a><span class="ss">        - </span>Blood pressure measurements are more likely to be missing for those with the highest blood pressure. This is MNAR rather than MAR because the missing data on blood pressure is related to the unobserved values themselves.</span>
-<span id="cb23-138"><a href="#cb23-138"></a><span class="ss">        - </span>High-income individuals may be less likely to report their income.</span>
-<span id="cb23-139"><a href="#cb23-139"></a><span class="ss">    - </span>Implications for downstream work:</span>
-<span id="cb23-140"><a href="#cb23-140"></a><span class="ss">        - </span>Ideally, we would learn more about the causes for the missingness. This could allow us to use more informed imputation models.</span>
-<span id="cb23-141"><a href="#cb23-141"></a><span class="ss">            - </span>Example: Biological measurements that tend to be missing because of concentrations that are too low (a phenomenon known as left-censoring). Imputation methods specifically suited to left-censoring are useful here.</span>
-<span id="cb23-142"><a href="#cb23-142"></a><span class="ss">        - </span>We can use imputation methods with different assumptions about the missing data and try out a variety of assumptions. This lets us see how sensitive the results are under various scenarios.</span>
-<span id="cb23-143"><a href="#cb23-143"></a><span class="ss">            - </span>Example: If higher incomes are more likely to be missing, we can make different assumptions about what "high" could be to fill in the missing values and see how our results change under these different assumptions.</span>
-<span id="cb23-144"><a href="#cb23-144"></a></span>
-<span id="cb23-145"><a href="#cb23-145"></a>:::</span>
-<span id="cb23-146"><a href="#cb23-146"></a></span>
-<span id="cb23-147"><a href="#cb23-147"></a><span class="fu">## Exercise </span></span>
-<span id="cb23-148"><a href="#cb23-148"></a></span>
-<span id="cb23-149"><a href="#cb23-149"></a><span class="ss">1. </span>**Missing data mechanism** For each of the following situations, propose what missing data mechanism you think is most likely at play. </span>
-<span id="cb23-150"><a href="#cb23-150"></a>  a. In a clinical trial, some patients dropped out before the end of the study. Their reasons for dropping out were not recorded.</span>
-<span id="cb23-151"><a href="#cb23-151"></a>  b. A weather station records temperature, humidity, and wind speed every hour. Some of the recorded values are missing.</span>
-<span id="cb23-152"><a href="#cb23-152"></a>  c. A social media platform collects data on user interactions, such as likes, comments, and shares. Some interactions are not recorded due to bugs in the code.</span>
-<span id="cb23-153"><a href="#cb23-153"></a></span>
-<span id="cb23-154"><a href="#cb23-154"></a></span>
-<span id="cb23-155"><a href="#cb23-155"></a></span>
-<span id="cb23-156"><a href="#cb23-156"></a><span class="fu">## Exploring Missing Data </span></span>
-<span id="cb23-157"><a href="#cb23-157"></a></span>
-<span id="cb23-158"><a href="#cb23-158"></a>**Guiding question:** How can we use visualizations and tabulations to explore what missing data mechanisms may be at play?</span>
-<span id="cb23-159"><a href="#cb23-159"></a></span>
-<span id="cb23-160"><a href="#cb23-160"></a>We'll look at the <span class="in">`airquality`</span> dataset available in base R, which gives daily air quality measurements in New York from May to September 1973. You can pull up the codebook with <span class="in">`?airquality`</span> in the Console.</span>
-<span id="cb23-161"><a href="#cb23-161"></a></span>
-<span id="cb23-162"><a href="#cb23-162"></a><span class="in">```{r load_airqual}</span></span>
-<span id="cb23-163"><a href="#cb23-163"></a><span class="co">#| eval: true</span></span>
-<span id="cb23-164"><a href="#cb23-164"></a><span class="fu">data</span>(airquality)</span>
-<span id="cb23-165"><a href="#cb23-165"></a><span class="in">```</span></span>
-<span id="cb23-166"><a href="#cb23-166"></a></span>
-<span id="cb23-167"><a href="#cb23-167"></a><span class="fu">## Missingness by Variable </span></span>
-<span id="cb23-168"><a href="#cb23-168"></a></span>
-<span id="cb23-169"><a href="#cb23-169"></a>We can explore how much missingness there is for each variable with the following functions:</span>
-<span id="cb23-170"><a href="#cb23-170"></a></span>
-<span id="cb23-171"><a href="#cb23-171"></a><span class="in">```{r miss_by_var}</span></span>
-<span id="cb23-172"><a href="#cb23-172"></a><span class="co">#| eval: true</span></span>
-<span id="cb23-173"><a href="#cb23-173"></a><span class="fu">summary</span>(airquality) <span class="co"># Summary statistics in addition to number of NA's</span></span>
-<span id="cb23-174"><a href="#cb23-174"></a>naniar<span class="sc">::</span><span class="fu">vis_miss</span>(airquality) <span class="co"># Where are NA's located?</span></span>
-<span id="cb23-175"><a href="#cb23-175"></a>naniar<span class="sc">::</span><span class="fu">miss_var_summary</span>(airquality) <span class="co"># Information from vis_miss() in table form</span></span>
-<span id="cb23-176"><a href="#cb23-176"></a><span class="in">```</span></span>
-<span id="cb23-177"><a href="#cb23-177"></a></span>
-<span id="cb23-178"><a href="#cb23-178"></a><span class="fu">## Missingness by Case </span></span>
-<span id="cb23-179"><a href="#cb23-179"></a></span>
-<span id="cb23-180"><a href="#cb23-180"></a>We can explore how much missingness there is for each case with <span class="in">`naniar::miss_case_summary()`</span>. </span>
-<span id="cb23-181"><a href="#cb23-181"></a>For each case, this function calculates the number and percentage of variables with a missing value. </span>
-<span id="cb23-182"><a href="#cb23-182"></a></span>
-<span id="cb23-183"><a href="#cb23-183"></a></span>
-<span id="cb23-184"><a href="#cb23-184"></a>**Impact of Information:** If the <span class="in">`pct_miss`</span> column is large for a case, we likely won't be able to impute any of its missing values because there just isn't enough known information--this case will have to be dropped from the analysis.</span>
-<span id="cb23-185"><a href="#cb23-185"></a></span>
-<span id="cb23-186"><a href="#cb23-186"></a><span class="in">```{r miss_by_case}</span></span>
-<span id="cb23-187"><a href="#cb23-187"></a><span class="co">#| eval: true</span></span>
-<span id="cb23-188"><a href="#cb23-188"></a>naniar<span class="sc">::</span><span class="fu">miss_case_summary</span>(airquality)</span>
-<span id="cb23-189"><a href="#cb23-189"></a><span class="in">```</span></span>
-<span id="cb23-190"><a href="#cb23-190"></a></span>
-<span id="cb23-191"><a href="#cb23-191"></a><span class="fu">## Exploring Missingness Mechanisms </span></span>
-<span id="cb23-192"><a href="#cb23-192"></a></span>
-<span id="cb23-193"><a href="#cb23-193"></a>Assessing missingness mechanisms involves checking if missingness in a variable is related to other variables. </span>
-<span id="cb23-194"><a href="#cb23-194"></a></span>
-<span id="cb23-195"><a href="#cb23-195"></a>Note: Through our available data, we are really only able to explore the potential for MCAR or MAR mechanisms. </span>
-<span id="cb23-196"><a href="#cb23-196"></a></span>
-<span id="cb23-197"><a href="#cb23-197"></a></span>
-<span id="cb23-198"><a href="#cb23-198"></a></span>
-<span id="cb23-199"><a href="#cb23-199"></a>**Impact of Information:** There is always the chance that unobserved information (unobserved other variables or unobserved values of the variables we do have) is related to missingness for our variables, so to think through the potential for MNAR, more contextual information is necessary.</span>
-<span id="cb23-200"><a href="#cb23-200"></a></span>
-<span id="cb23-201"><a href="#cb23-201"></a></span>
-<span id="cb23-202"><a href="#cb23-202"></a></span>
-<span id="cb23-203"><a href="#cb23-203"></a>To explore these relationships, we can create TRUE/FALSE indicators of whether a variable is missing. In the plots below, we use <span class="in">`is.na(Ozone)`</span> to explore whether cases with missing ozone values are noticeably different from cases with observed ozone values in terms of <span class="in">`Solar.R`</span>.</span>
-<span id="cb23-204"><a href="#cb23-204"></a></span>
-<span id="cb23-205"><a href="#cb23-205"></a><span class="in">```{r miss_box_dens}</span></span>
-<span id="cb23-206"><a href="#cb23-206"></a><span class="co">#| eval: true</span></span>
-<span id="cb23-207"><a href="#cb23-207"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Solar.R)) <span class="sc">+</span> </span>
-<span id="cb23-208"><a href="#cb23-208"></a>    <span class="fu">geom_boxplot</span>()</span>
-<span id="cb23-209"><a href="#cb23-209"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R, <span class="at">color =</span> <span class="fu">is.na</span>(Ozone))) <span class="sc">+</span> </span>
-<span id="cb23-210"><a href="#cb23-210"></a>    <span class="fu">geom_density</span>()</span>
-<span id="cb23-211"><a href="#cb23-211"></a><span class="in">```</span></span>
-<span id="cb23-212"><a href="#cb23-212"></a></span>
-<span id="cb23-213"><a href="#cb23-213"></a>The above boxplots and density plots suggest that missing ozone is not strongly related to solar radiation levels. </span>
-<span id="cb23-214"><a href="#cb23-214"></a></span>
-<span id="cb23-215"><a href="#cb23-215"></a></span>
-<span id="cb23-216"><a href="#cb23-216"></a>We still should check if ozone missingness is related to the <span class="in">`Wind`</span>, <span class="in">`Temp`</span>, <span class="in">`Month`</span>, and <span class="in">`Day`</span> variables (to be done in Exercises).</span>
-<span id="cb23-217"><a href="#cb23-217"></a></span>
-<span id="cb23-218"><a href="#cb23-218"></a></span>
-<span id="cb23-219"><a href="#cb23-219"></a></span>
-<span id="cb23-220"><a href="#cb23-220"></a>In addition to checking if the *chance* of ozone missingness is related to `Solar.R`, we should check if the *values* of ozone could be predicted by <span class="in">`Solar.R`</span>. </span>
-<span id="cb23-221"><a href="#cb23-221"></a></span>
-<span id="cb23-222"><a href="#cb23-222"></a></span>
-<span id="cb23-223"><a href="#cb23-223"></a>In the scaterrplot below, we look at the relationship between <span class="in">`Ozone`</span> and <span class="in">`Solar.R`</span> and use vertical lines to indicate the <span class="in">`Solar.R`</span> values for cases that are missing <span class="in">`Ozone`</span>.</span>
-<span id="cb23-224"><a href="#cb23-224"></a></span>
-<span id="cb23-225"><a href="#cb23-225"></a><span class="ss">- </span>**Impact of Information:** We see that missing `Ozone` cases are within the observed span of `Solar.R`, so we would be ok with predicting `Ozone` from `Solar.R` because there would be no **extrapolation**.</span>
-<span id="cb23-226"><a href="#cb23-226"></a></span>
-<span id="cb23-227"><a href="#cb23-227"></a><span class="in">```{r miss_scatter_na_markers}</span></span>
-<span id="cb23-228"><a href="#cb23-228"></a><span class="co">#| eval: true</span></span>
-<span id="cb23-229"><a href="#cb23-229"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
-<span id="cb23-230"><a href="#cb23-230"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-231"><a href="#cb23-231"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb23-232"><a href="#cb23-232"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Solar.R))</span>
-<span id="cb23-233"><a href="#cb23-233"></a><span class="in">```</span></span>
-<span id="cb23-234"><a href="#cb23-234"></a></span>
-<span id="cb23-235"><a href="#cb23-235"></a></span>
-<span id="cb23-236"><a href="#cb23-236"></a></span>
-<span id="cb23-237"><a href="#cb23-237"></a><span class="fu">## Exercises </span></span>
-<span id="cb23-238"><a href="#cb23-238"></a></span>
-<span id="cb23-239"><a href="#cb23-239"></a><span class="ss">2. </span>**Mechanism detection practice** Look at the boxplot + scatterplot pairs for Alternate Situations 1 and 2 below. How do these situations compare to our actual situation and to each other? What concerns might arise from using a model to impute <span class="in">`Ozone`</span>?</span>
-<span id="cb23-240"><a href="#cb23-240"></a></span>
-<span id="cb23-241"><a href="#cb23-241"></a><span class="in">```{r miss_scatter_na_markers_alt}</span></span>
-<span id="cb23-242"><a href="#cb23-242"></a><span class="co">#| eval: true</span></span>
-<span id="cb23-243"><a href="#cb23-243"></a><span class="co">#| echo: false</span></span>
-<span id="cb23-244"><a href="#cb23-244"></a>airquality_mod <span class="ot">&lt;-</span> airquality <span class="sc">|&gt;</span> </span>
-<span id="cb23-245"><a href="#cb23-245"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb23-246"><a href="#cb23-246"></a>        <span class="at">Solar.R_mod1 =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Ozone), <span class="dv">250</span> <span class="sc">+</span> Solar.R<span class="sc">/</span><span class="dv">4</span>, Solar.R),</span>
-<span id="cb23-247"><a href="#cb23-247"></a>        <span class="at">Solar.R_mod2 =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Ozone), <span class="dv">250</span> <span class="sc">+</span> Solar.R<span class="sc">/</span><span class="dv">2</span>, Solar.R)</span>
-<span id="cb23-248"><a href="#cb23-248"></a>    )</span>
-<span id="cb23-249"><a href="#cb23-249"></a></span>
-<span id="cb23-250"><a href="#cb23-250"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Solar.R_mod1)) <span class="sc">+</span> </span>
-<span id="cb23-251"><a href="#cb23-251"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb23-252"><a href="#cb23-252"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 1"</span>)</span>
-<span id="cb23-253"><a href="#cb23-253"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R_mod1, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
-<span id="cb23-254"><a href="#cb23-254"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-255"><a href="#cb23-255"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb23-256"><a href="#cb23-256"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Solar.R_mod1)) <span class="sc">+</span></span>
-<span id="cb23-257"><a href="#cb23-257"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 1"</span>)</span>
-<span id="cb23-258"><a href="#cb23-258"></a></span>
-<span id="cb23-259"><a href="#cb23-259"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Solar.R_mod2)) <span class="sc">+</span> </span>
-<span id="cb23-260"><a href="#cb23-260"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb23-261"><a href="#cb23-261"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 2"</span>)</span>
-<span id="cb23-262"><a href="#cb23-262"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R_mod2, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
-<span id="cb23-263"><a href="#cb23-263"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-264"><a href="#cb23-264"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb23-265"><a href="#cb23-265"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Solar.R_mod2)) <span class="sc">+</span></span>
-<span id="cb23-266"><a href="#cb23-266"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 2"</span>)</span>
-<span id="cb23-267"><a href="#cb23-267"></a><span class="in">```</span></span>
-<span id="cb23-268"><a href="#cb23-268"></a></span>
-<span id="cb23-269"><a href="#cb23-269"></a><span class="ss">3. </span>**Ozone mechanism detection** Continue the investigation of missingness for <span class="in">`Ozone`</span>. </span>
-<span id="cb23-270"><a href="#cb23-270"></a></span>
-<span id="cb23-271"><a href="#cb23-271"></a>We want to see how <span class="in">`Month`</span>, <span class="in">`Wind`</span>, and <span class="in">`Temp`</span> relate to the chance of missingness for <span class="in">`Ozone`</span> and to the value of <span class="in">`Ozone`</span>.</span>
-<span id="cb23-272"><a href="#cb23-272"></a></span>
-<span id="cb23-273"><a href="#cb23-273"></a>Does it look like a linear regression model (perhaps with variable transformations) could be effective in imputing the missing ozone data?</span>
-<span id="cb23-274"><a href="#cb23-274"></a></span>
-<span id="cb23-277"><a href="#cb23-277"></a><span class="in">```{r}</span></span>
-<span id="cb23-278"><a href="#cb23-278"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Month)) <span class="sc">+</span> </span>
-<span id="cb23-279"><a href="#cb23-279"></a>    <span class="fu">geom_boxplot</span>()</span>
-<span id="cb23-280"><a href="#cb23-280"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Month, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
-<span id="cb23-281"><a href="#cb23-281"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-282"><a href="#cb23-282"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb23-283"><a href="#cb23-283"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Month))</span>
-<span id="cb23-284"><a href="#cb23-284"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Wind)) <span class="sc">+</span> </span>
-<span id="cb23-285"><a href="#cb23-285"></a>    <span class="fu">geom_boxplot</span>()</span>
-<span id="cb23-286"><a href="#cb23-286"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Wind, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
-<span id="cb23-287"><a href="#cb23-287"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-288"><a href="#cb23-288"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb23-289"><a href="#cb23-289"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Wind))</span>
-<span id="cb23-290"><a href="#cb23-290"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Temp)) <span class="sc">+</span> </span>
-<span id="cb23-291"><a href="#cb23-291"></a>    <span class="fu">geom_boxplot</span>()</span>
-<span id="cb23-292"><a href="#cb23-292"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Temp, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
-<span id="cb23-293"><a href="#cb23-293"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-294"><a href="#cb23-294"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb23-295"><a href="#cb23-295"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Temp))</span>
-<span id="cb23-296"><a href="#cb23-296"></a></span>
-<span id="cb23-297"><a href="#cb23-297"></a><span class="in">```</span></span>
-<span id="cb23-298"><a href="#cb23-298"></a></span>
-<span id="cb23-299"><a href="#cb23-299"></a></span>
-<span id="cb23-300"><a href="#cb23-300"></a></span>
-<span id="cb23-301"><a href="#cb23-301"></a><span class="fu">## Regression Imputation </span></span>
-<span id="cb23-302"><a href="#cb23-302"></a></span>
-<span id="cb23-303"><a href="#cb23-303"></a>When a model is built and used to generate a single set of predictions for missing values, this is known as **single imputation**. </span>
-<span id="cb23-304"><a href="#cb23-304"></a></span>
-<span id="cb23-305"><a href="#cb23-305"></a></span>
-<span id="cb23-306"><a href="#cb23-306"></a><span class="ss">- </span>When using singly imputed data in subsequent modeling, the uncertainty in estimates tends to be underestimated. This means that:</span>
-<span id="cb23-307"><a href="#cb23-307"></a><span class="ss">    - </span>Standard errors are lower than they should be.</span>
-<span id="cb23-308"><a href="#cb23-308"></a><span class="ss">    - </span>Confidence intervals won't contain the true parameter value the "advertised" percentage of times</span>
-<span id="cb23-309"><a href="#cb23-309"></a><span class="ss">        - </span>e.g., 95% confidence intervals will not contain the truth in 95% of samples--the coverage probability will be less than 95%</span>
-<span id="cb23-310"><a href="#cb23-310"></a></span>
-<span id="cb23-311"><a href="#cb23-311"></a></span>
-<span id="cb23-312"><a href="#cb23-312"></a>In **multiple imputation**, multiple imputed datasets are generated with different values for the filled-in data. </span>
-<span id="cb23-313"><a href="#cb23-313"></a></span>
-<span id="cb23-314"><a href="#cb23-314"></a></span>
-<span id="cb23-315"><a href="#cb23-315"></a><span class="ss">- </span>Subsequent models are fit on each of these datasets, and both estimates and uncertainty measures are pooled across all of these fits. </span>
-<span id="cb23-316"><a href="#cb23-316"></a><span class="ss">- </span>Multiple imputation more accurately estimates uncertainty measures.</span>
-<span id="cb23-317"><a href="#cb23-317"></a></span>
-<span id="cb23-318"><a href="#cb23-318"></a><span class="fu">## Simulation Studies </span></span>
-<span id="cb23-319"><a href="#cb23-319"></a></span>
-<span id="cb23-320"><a href="#cb23-320"></a>We can use a **simulation study** to investigate the statistical properties described above.</span>
-<span id="cb23-321"><a href="#cb23-321"></a></span>
-<span id="cb23-322"><a href="#cb23-322"></a>::: {.incremental}</span>
-<span id="cb23-323"><a href="#cb23-323"></a></span>
-<span id="cb23-324"><a href="#cb23-324"></a><span class="ss">1. </span>Generate (simulate) data where we are in control of missing data mechanisms and the true relationship between an outcome and the predictors.</span>
-<span id="cb23-325"><a href="#cb23-325"></a><span class="ss">2. </span>On that simulated data, use **single imputation** to fill in the missing values. Fit the desired model, and obtain a confidence interval for a coefficient of interest.</span>
-<span id="cb23-326"><a href="#cb23-326"></a><span class="ss">3. </span>On that simulated data, use **multiple imputation** to fill in the missing values. Fit the desired models on all imputed datasets, pool results, and obtain a confidence interval for a coefficient of interest.</span>
-<span id="cb23-327"><a href="#cb23-327"></a><span class="ss">4. </span>Steps 1 - 3 are repeated a lot of times (<span class="in">`num_simulations &lt;- 1000`</span>) to see how things work out in lots of different samples.</span>
-<span id="cb23-328"><a href="#cb23-328"></a><span class="ss">5. </span>Summarize the performance of single and multiple imputation across the <span class="in">`num_simulations`</span> simulations.</span>
-<span id="cb23-329"><a href="#cb23-329"></a></span>
-<span id="cb23-330"><a href="#cb23-330"></a>:::</span>
-<span id="cb23-331"><a href="#cb23-331"></a></span>
-<span id="cb23-332"><a href="#cb23-332"></a>We will slowly step through the simulation study code below. We will pause frequently for you to add comments documenting what is happening. </span>
-<span id="cb23-333"><a href="#cb23-333"></a></span>
-<span id="cb23-334"><a href="#cb23-334"></a><span class="in">```{r mult_single_sim_study}</span></span>
-<span id="cb23-335"><a href="#cb23-335"></a><span class="fu">set.seed</span>(<span class="dv">224</span>)</span>
-<span id="cb23-336"><a href="#cb23-336"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb23-337"><a href="#cb23-337"></a>ci_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="at">length =</span> num_simulations)</span>
-<span id="cb23-338"><a href="#cb23-338"></a></span>
-<span id="cb23-339"><a href="#cb23-339"></a><span class="fu">system.time</span>({</span>
-<span id="cb23-340"><a href="#cb23-340"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_simulations) {</span>
-<span id="cb23-341"><a href="#cb23-341"></a>    <span class="co"># Simulate data</span></span>
-<span id="cb23-342"><a href="#cb23-342"></a>    n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb23-343"><a href="#cb23-343"></a>    sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb23-344"><a href="#cb23-344"></a>        <span class="at">x1 =</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>),</span>
-<span id="cb23-345"><a href="#cb23-345"></a>        <span class="at">x2 =</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb23-346"><a href="#cb23-346"></a>        <span class="at">x2_miss_bool =</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> x1<span class="sc">/</span><span class="dv">2</span>),</span>
-<span id="cb23-347"><a href="#cb23-347"></a>        <span class="at">x2_NA =</span> <span class="fu">if_else</span>(x2_miss_bool <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">NA</span>, x2),</span>
-<span id="cb23-348"><a href="#cb23-348"></a>        <span class="at">y =</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb23-349"><a href="#cb23-349"></a>    )</span>
-<span id="cb23-350"><a href="#cb23-350"></a>    </span>
-<span id="cb23-351"><a href="#cb23-351"></a>    <span class="co"># Single imputation ---------------</span></span>
-<span id="cb23-352"><a href="#cb23-352"></a>    mice_obj <span class="ot">&lt;-</span> <span class="fu">mice</span>(sim_data <span class="sc">|&gt;</span> <span class="fu">select</span>(x1, x2_NA, y), <span class="at">m =</span> <span class="dv">1</span>, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">printFlag =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb23-353"><a href="#cb23-353"></a>    si_mod <span class="ot">&lt;-</span> <span class="fu">with</span>(mice_obj, <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2_NA))</span>
-<span id="cb23-354"><a href="#cb23-354"></a>    ci_single <span class="ot">&lt;-</span> si_mod<span class="sc">$</span>analyses[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> <span class="fu">confint</span>(<span class="at">level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb23-355"><a href="#cb23-355"></a>    ci_single <span class="ot">&lt;-</span> ci_single[<span class="st">"x2_NA"</span>,]</span>
-<span id="cb23-356"><a href="#cb23-356"></a>    </span>
-<span id="cb23-357"><a href="#cb23-357"></a>    <span class="co"># Multiple imputation -------------</span></span>
-<span id="cb23-358"><a href="#cb23-358"></a>    mice_obj <span class="ot">&lt;-</span> <span class="fu">mice</span>(sim_data <span class="sc">|&gt;</span> <span class="fu">select</span>(x1, x2_NA, y), <span class="at">m =</span> <span class="dv">10</span>, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">printFlag =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb23-359"><a href="#cb23-359"></a>    mi_mods <span class="ot">&lt;-</span> <span class="fu">with</span>(mice_obj, <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2_NA))</span>
-<span id="cb23-360"><a href="#cb23-360"></a>    pooled_res <span class="ot">&lt;-</span> <span class="fu">pool</span>(mi_mods)</span>
-<span id="cb23-361"><a href="#cb23-361"></a>    summ_pooled_res <span class="ot">&lt;-</span> <span class="fu">summary</span>(pooled_res, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
-<span id="cb23-362"><a href="#cb23-362"></a>    ci_multiple_lower <span class="ot">&lt;-</span> summ_pooled_res <span class="sc">|&gt;</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x2_NA"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">2.5 %</span><span class="st">`</span>)</span>
-<span id="cb23-363"><a href="#cb23-363"></a>    ci_multiple_upper <span class="ot">&lt;-</span> summ_pooled_res <span class="sc">|&gt;</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x2_NA"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">97.5 %</span><span class="st">`</span>)</span>
-<span id="cb23-364"><a href="#cb23-364"></a>    </span>
-<span id="cb23-365"><a href="#cb23-365"></a>    <span class="co"># Store CI information</span></span>
-<span id="cb23-366"><a href="#cb23-366"></a>    ci_list[[i]] <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb23-367"><a href="#cb23-367"></a>        <span class="at">ci_lower =</span> <span class="fu">c</span>(</span>
-<span id="cb23-368"><a href="#cb23-368"></a>            ci_single[<span class="dv">1</span>],</span>
-<span id="cb23-369"><a href="#cb23-369"></a>            ci_multiple_lower</span>
-<span id="cb23-370"><a href="#cb23-370"></a>        ),</span>
-<span id="cb23-371"><a href="#cb23-371"></a>        <span class="at">ci_upper =</span> <span class="fu">c</span>(</span>
-<span id="cb23-372"><a href="#cb23-372"></a>            ci_single[<span class="dv">2</span>],</span>
-<span id="cb23-373"><a href="#cb23-373"></a>            ci_multiple_upper</span>
-<span id="cb23-374"><a href="#cb23-374"></a>        ),</span>
-<span id="cb23-375"><a href="#cb23-375"></a>        <span class="at">which_imp =</span> <span class="fu">c</span>(<span class="st">"single"</span>, <span class="st">"multiple"</span>)</span>
-<span id="cb23-376"><a href="#cb23-376"></a>    )</span>
-<span id="cb23-377"><a href="#cb23-377"></a>}</span>
-<span id="cb23-378"><a href="#cb23-378"></a>})</span>
-<span id="cb23-379"><a href="#cb23-379"></a><span class="in">```</span></span>
-<span id="cb23-380"><a href="#cb23-380"></a></span>
-<span id="cb23-381"><a href="#cb23-381"></a>Below we compute the confidence interval (CI) coverage probability (fraction of times the CI contains the true value of <span class="in">`1`</span>) for the CIs generated from single and multiple imputation:</span>
-<span id="cb23-382"><a href="#cb23-382"></a></span>
-<span id="cb23-383"><a href="#cb23-383"></a><span class="in">```{r mult_single_sim_study_summ}</span></span>
-<span id="cb23-384"><a href="#cb23-384"></a>ci_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ci_list)</span>
-<span id="cb23-385"><a href="#cb23-385"></a>ci_data <span class="sc">|&gt;</span> </span>
-<span id="cb23-386"><a href="#cb23-386"></a>    <span class="fu">mutate</span>(<span class="at">contains_truth =</span> ci_lower <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> ci_upper <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb23-387"><a href="#cb23-387"></a>    <span class="fu">group_by</span>(which_imp) <span class="sc">|&gt;</span> </span>
-<span id="cb23-388"><a href="#cb23-388"></a>    <span class="fu">summarize</span>(<span class="at">frac_contains_truth =</span> <span class="fu">mean</span>(contains_truth))</span>
-<span id="cb23-389"><a href="#cb23-389"></a><span class="in">```</span></span>
-<span id="cb23-390"><a href="#cb23-390"></a></span>
-<span id="cb23-391"><a href="#cb23-391"></a><span class="fu">## Done!</span></span>
-<span id="cb23-392"><a href="#cb23-392"></a></span>
-<span id="cb23-393"><a href="#cb23-393"></a><span class="ss">- </span>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</span>
+<div class="sourceCode" id="cb21" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">---</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="an">title:</span><span class="co"> "8 Missing Data"</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co">---</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="in">```{r doc_setup_08, echo=FALSE, message=FALSE}</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="fu">library</span>(mice)</span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="in">```</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="fu">## 🧩 Learning Goals</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a></span>
+<span id="cb21-14"><a href="#cb21-14"></a>By the end of this lesson, you should be able to:</span>
+<span id="cb21-15"><a href="#cb21-15"></a></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="ss">- </span>Go through a data quality checklist when data wrangling</span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="ss">- </span>Explain the difference between MCAR, MAR, and MNAR missing data mechanisms</span>
+<span id="cb21-18"><a href="#cb21-18"></a><span class="ss">- </span>Assess what missing data mechanisms might be at play in a given dataset</span>
+<span id="cb21-19"><a href="#cb21-19"></a><span class="ss">- </span>Use visualizations to explore missing data patterns</span>
+<span id="cb21-20"><a href="#cb21-20"></a><span class="ss">- </span>Explain why multiple imputation is preferred to single imputation</span>
+<span id="cb21-21"><a href="#cb21-21"></a><span class="ss">- </span>Explain how a simulation study can be used to investigate properties of statistical methods</span>
+<span id="cb21-22"><a href="#cb21-22"></a></span>
+<span id="cb21-23"><a href="#cb21-23"></a></span>
+<span id="cb21-24"><a href="#cb21-24"></a><span class="fu">## Data Quality Checklist </span></span>
+<span id="cb21-25"><a href="#cb21-25"></a></span>
+<span id="cb21-26"><a href="#cb21-26"></a>When wrangling / cleaning data, make sure to check the assumptions you make about the data to ensure you don't lose data quality.</span>
+<span id="cb21-27"><a href="#cb21-27"></a></span>
+<span id="cb21-28"><a href="#cb21-28"></a></span>
+<span id="cb21-29"><a href="#cb21-29"></a>:::{.incremental}</span>
+<span id="cb21-30"><a href="#cb21-30"></a>**Data Parsing** (reading data into a different data format)</span>
+<span id="cb21-31"><a href="#cb21-31"></a></span>
+<span id="cb21-32"><a href="#cb21-32"></a><span class="ss">- </span>Always keep the original, raw data (don't manually change it).</span>
+<span id="cb21-33"><a href="#cb21-33"></a><span class="ss">- </span>Use Test Cases: Find rows or write test cases to double check the wrangling works as expected</span>
+<span id="cb21-34"><a href="#cb21-34"></a><span class="ss">- </span>DATES: When using <span class="in">`lubridate`</span> to parse dates and times, ensure the strings are consistently ordered and formatted correctly, eg,  mm/dd/yy vs. dd/mm/yy. </span>
+<span id="cb21-35"><a href="#cb21-35"></a><span class="ss">- </span>STRINGS: When using <span class="in">`stringr`</span> to parse strings with regular expressions, check example rows to ensure that the pattern captured all of the examples you want and excluded the patterns you don't want.</span>
+<span id="cb21-36"><a href="#cb21-36"></a><span class="ss">- </span>Always check for missing values to see if the missing ones are expected given the original data.</span>
+<span id="cb21-37"><a href="#cb21-37"></a></span>
+<span id="cb21-38"><a href="#cb21-38"></a>:::</span>
+<span id="cb21-39"><a href="#cb21-39"></a></span>
+<span id="cb21-40"><a href="#cb21-40"></a>**Data Joining**</span>
+<span id="cb21-41"><a href="#cb21-41"></a></span>
+<span id="cb21-42"><a href="#cb21-42"></a>:::{.incremental}</span>
+<span id="cb21-43"><a href="#cb21-43"></a></span>
+<span id="cb21-44"><a href="#cb21-44"></a><span class="ss">- </span>Identify missing values in the key variables and decide how to handle them before the merge process (e.g., omitting rows with missing values, imputing missing values).</span>
+<span id="cb21-45"><a href="#cb21-45"></a><span class="ss">- </span>Decide on the correct join type (left, right, inner, full, etc.) OR if the data structure is the same use <span class="in">`list_rbind()`</span> to bind rows or <span class="in">`list_cbind()`</span> to bind columns.</span>
+<span id="cb21-46"><a href="#cb21-46"></a><span class="ss">- </span>If doing a join, make sure that the key variables (<span class="in">`by`</span>) have the same meaning in both datasets and are represented in the same way (e.g., id = 1 to 20 in first dataset will match id = 1 - 20 in undesirable ways)</span>
+<span id="cb21-47"><a href="#cb21-47"></a><span class="ss">- </span>Predict the number of rows that will result from the join and double check the <span class="in">`anti_join()`</span> to see which rows did not find a match.</span>
+<span id="cb21-48"><a href="#cb21-48"></a><span class="ss">- </span>Check for duplicate records within each dataset and ensure they are handled appropriately before merging.</span>
+<span id="cb21-49"><a href="#cb21-49"></a><span class="ss">- </span>Verify that the merged dataset maintains consistency with the original datasets in terms of data values, variable names, and variable types.</span>
+<span id="cb21-50"><a href="#cb21-50"></a><span class="ss">- </span>Perform some preliminary analysis or validation checks on the merged dataset to ensure that it meets the requirements of your analysis.</span>
+<span id="cb21-51"><a href="#cb21-51"></a></span>
+<span id="cb21-52"><a href="#cb21-52"></a>:::</span>
+<span id="cb21-53"><a href="#cb21-53"></a></span>
+<span id="cb21-54"><a href="#cb21-54"></a></span>
+<span id="cb21-55"><a href="#cb21-55"></a>**Sanity Check: Visualize your data!!!**</span>
+<span id="cb21-56"><a href="#cb21-56"></a></span>
+<span id="cb21-57"><a href="#cb21-57"></a>:::{.incremental}</span>
+<span id="cb21-58"><a href="#cb21-58"></a><span class="ss">- </span>Do the right number of points appear?</span>
+<span id="cb21-59"><a href="#cb21-59"></a><span class="ss">- </span>Do the values seem reasonable?</span>
+<span id="cb21-60"><a href="#cb21-60"></a>:::</span>
+<span id="cb21-61"><a href="#cb21-61"></a></span>
+<span id="cb21-62"><a href="#cb21-62"></a><span class="fu">## Explicit v. Implicit Missing Data </span></span>
+<span id="cb21-63"><a href="#cb21-63"></a></span>
+<span id="cb21-64"><a href="#cb21-64"></a>**Explicit missing data** is data that is explicitly marked as missing. In R, this is done with <span class="in">`NA`</span>.</span>
+<span id="cb21-65"><a href="#cb21-65"></a></span>
+<span id="cb21-66"><a href="#cb21-66"></a></span>
+<span id="cb21-67"><a href="#cb21-67"></a>**Implicit missing data** is data that is missing but not explicitly marked as such. </span>
+<span id="cb21-68"><a href="#cb21-68"></a></span>
+<span id="cb21-69"><a href="#cb21-69"></a><span class="ss">- </span>This can happen when an entire row is missing from a dataset. </span>
+<span id="cb21-70"><a href="#cb21-70"></a><span class="ss">    - </span>For example, if a study participant doesn't attend a follow-up visit. It maybe not even be recorded in the data.</span>
+<span id="cb21-71"><a href="#cb21-71"></a></span>
+<span id="cb21-72"><a href="#cb21-72"></a>We need to **make implicit missingness explicit** before we can work with the data. </span>
+<span id="cb21-73"><a href="#cb21-73"></a></span>
+<span id="cb21-74"><a href="#cb21-74"></a><span class="ss">- </span>Consider the combinations of variables that you'd expect to be fully present in a complete dataset. </span>
+<span id="cb21-75"><a href="#cb21-75"></a><span class="ss">    - </span>If a combination is missing, you can create a new row with explicit missing values. </span>
+<span id="cb21-76"><a href="#cb21-76"></a><span class="ss">      - </span>For example, if you expect every participant (each has a unique <span class="in">`pid`</span>) to have an observation for each <span class="in">`visit`</span>, you could use the function <span class="in">`complete()`</span> to create that new row and plug in values of <span class="in">`NA`</span> for the missing data.</span>
+<span id="cb21-77"><a href="#cb21-77"></a></span>
+<span id="cb21-78"><a href="#cb21-78"></a><span class="in">```</span></span>
+<span id="cb21-79"><a href="#cb21-79"></a><span class="in">study_data_full &lt;- study_data |&gt; </span></span>
+<span id="cb21-80"><a href="#cb21-80"></a><span class="in">  complete(pid, visit)</span></span>
+<span id="cb21-81"><a href="#cb21-81"></a><span class="in">```</span></span>
+<span id="cb21-82"><a href="#cb21-82"></a></span>
+<span id="cb21-83"><a href="#cb21-83"></a><span class="fu">## Dealing with missing data </span></span>
+<span id="cb21-84"><a href="#cb21-84"></a></span>
+<span id="cb21-85"><a href="#cb21-85"></a>If you have **explicit** missing data, there are 3 main ways of proceeding:</span>
+<span id="cb21-86"><a href="#cb21-86"></a></span>
+<span id="cb21-87"><a href="#cb21-87"></a>::: {.incremental}</span>
+<span id="cb21-88"><a href="#cb21-88"></a></span>
+<span id="cb21-89"><a href="#cb21-89"></a><span class="ss">1. </span>Drop the cases or rows with any missing data from the analysis--a **complete case analysis**</span>
+<span id="cb21-90"><a href="#cb21-90"></a><span class="ss">    -  </span>Pro: Easy to implement</span>
+<span id="cb21-91"><a href="#cb21-91"></a><span class="ss">    -  </span>Con: reduces sample size, introduces bias if the missing data is not "missing completely at random" </span>
+<span id="cb21-92"><a href="#cb21-92"></a>    </span>
+<span id="cb21-93"><a href="#cb21-93"></a><span class="ss">2. </span>Create a category for missing values.</span>
+<span id="cb21-94"><a href="#cb21-94"></a><span class="ss">    - </span>Example: The survey question "What is your gender?" might only provide two possible responses: "male" and "female". Missing values for this could indicate that the respondent uses a non-binary designation. Instead of dropping these cases, treating the missing data as its own category ("Does not wish to answer") would be more appropriate.</span>
+<span id="cb21-95"><a href="#cb21-95"></a><span class="ss">    - </span>Pros: Maintains sample size, may help us if data is "missing not at random"</span>
+<span id="cb21-96"><a href="#cb21-96"></a><span class="ss">    - </span>Cons: Not directly applicable to continuous outcomes (could include interactions with a categorical version in models to account for it)</span>
+<span id="cb21-97"><a href="#cb21-97"></a>    </span>
+<span id="cb21-98"><a href="#cb21-98"></a><span class="ss">3. </span>**Impute** (or fill in values for) the missing data using imputation algorithms.</span>
+<span id="cb21-99"><a href="#cb21-99"></a><span class="ss">    - </span>Imputation algorithms can be as simple as replacing missing values with the mean of the non-missing values (very simplistic).</span>
+<span id="cb21-100"><a href="#cb21-100"></a><span class="ss">    - </span>Regression imputation algorithms use models to predict missing values as a function of other variables in the data.</span>
+<span id="cb21-101"><a href="#cb21-101"></a><span class="ss">    - </span>Pros: Maintains sample size, multiple regression imputation minimizes bias if "missing at random" </span>
+<span id="cb21-102"><a href="#cb21-102"></a><span class="ss">    - </span>Cons: Computationally intensive</span>
+<span id="cb21-103"><a href="#cb21-103"></a>:::</span>
+<span id="cb21-104"><a href="#cb21-104"></a></span>
+<span id="cb21-105"><a href="#cb21-105"></a></span>
+<span id="cb21-106"><a href="#cb21-106"></a>Deciding between these options and proceeding with choosing finer details within an option requires an understanding of the **mechanism** by which data become missing.</span>
+<span id="cb21-107"><a href="#cb21-107"></a></span>
+<span id="cb21-108"><a href="#cb21-108"></a></span>
+<span id="cb21-109"><a href="#cb21-109"></a></span>
+<span id="cb21-110"><a href="#cb21-110"></a><span class="fu">## Missing Data Mechanisms </span></span>
+<span id="cb21-111"><a href="#cb21-111"></a></span>
+<span id="cb21-112"><a href="#cb21-112"></a>The reasons for which a variable might have missing data are divided into 3 mechanisms: MCAR, MAR, and MNAR. </span>
+<span id="cb21-113"><a href="#cb21-113"></a></span>
+<span id="cb21-114"><a href="#cb21-114"></a>Within a dataset, multiple mechanisms may be present--we need to consider the missingness mechanism for each variable individually.</span>
+<span id="cb21-115"><a href="#cb21-115"></a></span>
+<span id="cb21-116"><a href="#cb21-116"></a>::: {.incremental}</span>
+<span id="cb21-117"><a href="#cb21-117"></a><span class="ss">- </span>**Missing completely at random (MCAR)**:</span>
+<span id="cb21-118"><a href="#cb21-118"></a><span class="ss">    - </span>The probability of missing data for a variable is the same for all cases. Implies that causes of the missing data are unrelated to the data. (<span class="ot">&lt;https://stefvanbuuren.name/fimd/sec-MCAR.html&gt;</span>)</span>
+<span id="cb21-119"><a href="#cb21-119"></a><span class="ss">    - </span>Examples:</span>
+<span id="cb21-120"><a href="#cb21-120"></a><span class="ss">        - </span>Measurement device that runs out of batteries causes the remainder of observations for the day to be missing.</span>
+<span id="cb21-121"><a href="#cb21-121"></a><span class="ss">        - </span>Data entry software requires a particular field to be typo-free, and missing values are introduced when there are typos.</span>
+<span id="cb21-122"><a href="#cb21-122"></a><span class="ss">    - </span>Implications for downstream work:</span>
+<span id="cb21-123"><a href="#cb21-123"></a><span class="ss">        - </span>If a variable has MCAR missingness, a complete case analysis will be unbiased (still valid).</span>
+<span id="cb21-124"><a href="#cb21-124"></a><span class="ss">        - </span>However, with a lot of missing observations, a complete case analysis will suffer from loss of statistical power (ability to detect a real difference), and imputation will be useful to retain the original sample size.</span>
+<span id="cb21-125"><a href="#cb21-125"></a></span>
+<span id="cb21-126"><a href="#cb21-126"></a><span class="ss">- </span>**Missing at random (MAR):**</span>
+<span id="cb21-127"><a href="#cb21-127"></a><span class="ss">    - </span>The probability of missing data is related to **observed** variables but unrelated to unobserved information.</span>
+<span id="cb21-128"><a href="#cb21-128"></a><span class="ss">    - </span>Examples:</span>
+<span id="cb21-129"><a href="#cb21-129"></a><span class="ss">        - </span>Blood pressure measurements tend to be missing in patients in worse health. (Those in worse health are more likely to miss clinic visits.) Better and worse health can be measured by a variety of indicators in their health record.</span>
+<span id="cb21-130"><a href="#cb21-130"></a><span class="ss">        - </span>In a survey, older people are more likely to report their income than younger people. Missingness is related to the observed age variable, but not to unobserved information.</span>
+<span id="cb21-131"><a href="#cb21-131"></a><span class="ss">    - </span>Implications for downstream work:</span>
+<span id="cb21-132"><a href="#cb21-132"></a><span class="ss">        - </span>Try to use imputation methods that predict the value of the missing variables from other observed variables. Assessing whether this can be done accurately takes some exploration--we'll explore this shortly.</span>
+<span id="cb21-133"><a href="#cb21-133"></a></span>
+<span id="cb21-134"><a href="#cb21-134"></a><span class="ss">- </span>**Missing not at random (MNAR):**</span>
+<span id="cb21-135"><a href="#cb21-135"></a><span class="ss">    - </span>The probability of missing data is related to **unobserved** variables (and probably observed variables too).</span>
+<span id="cb21-136"><a href="#cb21-136"></a><span class="ss">    - </span>Examples:</span>
+<span id="cb21-137"><a href="#cb21-137"></a><span class="ss">        - </span>Blood pressure measurements are more likely to be missing for those with the highest blood pressure. This is MNAR rather than MAR because the missing data on blood pressure is related to the unobserved values themselves.</span>
+<span id="cb21-138"><a href="#cb21-138"></a><span class="ss">        - </span>High-income individuals may be less likely to report their income.</span>
+<span id="cb21-139"><a href="#cb21-139"></a><span class="ss">    - </span>Implications for downstream work:</span>
+<span id="cb21-140"><a href="#cb21-140"></a><span class="ss">        - </span>Ideally, we would learn more about the causes for the missingness. This could allow us to use more informed imputation models.</span>
+<span id="cb21-141"><a href="#cb21-141"></a><span class="ss">            - </span>Example: Biological measurements that tend to be missing because of concentrations that are too low (a phenomenon known as left-censoring). Imputation methods specifically suited to left-censoring are useful here.</span>
+<span id="cb21-142"><a href="#cb21-142"></a><span class="ss">        - </span>We can use imputation methods with different assumptions about the missing data and try out a variety of assumptions. This lets us see how sensitive the results are under various scenarios.</span>
+<span id="cb21-143"><a href="#cb21-143"></a><span class="ss">            - </span>Example: If higher incomes are more likely to be missing, we can make different assumptions about what "high" could be to fill in the missing values and see how our results change under these different assumptions.</span>
+<span id="cb21-144"><a href="#cb21-144"></a></span>
+<span id="cb21-145"><a href="#cb21-145"></a>:::</span>
+<span id="cb21-146"><a href="#cb21-146"></a></span>
+<span id="cb21-147"><a href="#cb21-147"></a><span class="fu">## Exercise </span></span>
+<span id="cb21-148"><a href="#cb21-148"></a></span>
+<span id="cb21-149"><a href="#cb21-149"></a><span class="ss">1. </span>**Missing data mechanism** For each of the following situations, propose what missing data mechanism you think is most likely at play. </span>
+<span id="cb21-150"><a href="#cb21-150"></a>  a. In a clinical trial, some patients dropped out before the end of the study. Their reasons for dropping out were not recorded.</span>
+<span id="cb21-151"><a href="#cb21-151"></a>  b. A weather station records temperature, humidity, and wind speed every hour. Some of the recorded values are missing.</span>
+<span id="cb21-152"><a href="#cb21-152"></a>  c. A social media platform collects data on user interactions, such as likes, comments, and shares. Some interactions are not recorded due to bugs in the code.</span>
+<span id="cb21-153"><a href="#cb21-153"></a></span>
+<span id="cb21-154"><a href="#cb21-154"></a></span>
+<span id="cb21-155"><a href="#cb21-155"></a></span>
+<span id="cb21-156"><a href="#cb21-156"></a><span class="fu">## Exploring Missing Data </span></span>
+<span id="cb21-157"><a href="#cb21-157"></a></span>
+<span id="cb21-158"><a href="#cb21-158"></a>**Guiding question:** How can we use visualizations and tabulations to explore what missing data mechanisms may be at play?</span>
+<span id="cb21-159"><a href="#cb21-159"></a></span>
+<span id="cb21-160"><a href="#cb21-160"></a>We'll look at the <span class="in">`airquality`</span> dataset available in base R, which gives daily air quality measurements in New York from May to September 1973. You can pull up the codebook with <span class="in">`?airquality`</span> in the Console.</span>
+<span id="cb21-161"><a href="#cb21-161"></a></span>
+<span id="cb21-162"><a href="#cb21-162"></a><span class="in">```{r load_airqual}</span></span>
+<span id="cb21-163"><a href="#cb21-163"></a><span class="co">#| eval: true</span></span>
+<span id="cb21-164"><a href="#cb21-164"></a><span class="fu">data</span>(airquality)</span>
+<span id="cb21-165"><a href="#cb21-165"></a><span class="in">```</span></span>
+<span id="cb21-166"><a href="#cb21-166"></a></span>
+<span id="cb21-167"><a href="#cb21-167"></a><span class="fu">## Missingness by Variable </span></span>
+<span id="cb21-168"><a href="#cb21-168"></a></span>
+<span id="cb21-169"><a href="#cb21-169"></a>We can explore how much missingness there is for each variable with the following functions:</span>
+<span id="cb21-170"><a href="#cb21-170"></a></span>
+<span id="cb21-171"><a href="#cb21-171"></a><span class="in">```{r miss_by_var}</span></span>
+<span id="cb21-172"><a href="#cb21-172"></a><span class="co">#| eval: true</span></span>
+<span id="cb21-173"><a href="#cb21-173"></a><span class="fu">summary</span>(airquality) <span class="co"># Summary statistics in addition to number of NA's</span></span>
+<span id="cb21-174"><a href="#cb21-174"></a>naniar<span class="sc">::</span><span class="fu">vis_miss</span>(airquality) <span class="co"># Where are NA's located?</span></span>
+<span id="cb21-175"><a href="#cb21-175"></a>naniar<span class="sc">::</span><span class="fu">miss_var_summary</span>(airquality) <span class="co"># Information from vis_miss() in table form</span></span>
+<span id="cb21-176"><a href="#cb21-176"></a><span class="in">```</span></span>
+<span id="cb21-177"><a href="#cb21-177"></a></span>
+<span id="cb21-178"><a href="#cb21-178"></a><span class="fu">## Missingness by Case </span></span>
+<span id="cb21-179"><a href="#cb21-179"></a></span>
+<span id="cb21-180"><a href="#cb21-180"></a>We can explore how much missingness there is for each case with <span class="in">`naniar::miss_case_summary()`</span>. </span>
+<span id="cb21-181"><a href="#cb21-181"></a>For each case, this function calculates the number and percentage of variables with a missing value. </span>
+<span id="cb21-182"><a href="#cb21-182"></a></span>
+<span id="cb21-183"><a href="#cb21-183"></a></span>
+<span id="cb21-184"><a href="#cb21-184"></a>**Impact of Information:** If the <span class="in">`pct_miss`</span> column is large for a case, we likely won't be able to impute any of its missing values because there just isn't enough known information--this case will have to be dropped from the analysis.</span>
+<span id="cb21-185"><a href="#cb21-185"></a></span>
+<span id="cb21-186"><a href="#cb21-186"></a><span class="in">```{r miss_by_case}</span></span>
+<span id="cb21-187"><a href="#cb21-187"></a><span class="co">#| eval: true</span></span>
+<span id="cb21-188"><a href="#cb21-188"></a>naniar<span class="sc">::</span><span class="fu">miss_case_summary</span>(airquality)</span>
+<span id="cb21-189"><a href="#cb21-189"></a><span class="in">```</span></span>
+<span id="cb21-190"><a href="#cb21-190"></a></span>
+<span id="cb21-191"><a href="#cb21-191"></a><span class="fu">## Exploring Missingness Mechanisms </span></span>
+<span id="cb21-192"><a href="#cb21-192"></a></span>
+<span id="cb21-193"><a href="#cb21-193"></a>Assessing missingness mechanisms involves checking if missingness in a variable is related to other variables. </span>
+<span id="cb21-194"><a href="#cb21-194"></a></span>
+<span id="cb21-195"><a href="#cb21-195"></a>Note: Through our available data, we are really only able to explore the potential for MCAR or MAR mechanisms. </span>
+<span id="cb21-196"><a href="#cb21-196"></a></span>
+<span id="cb21-197"><a href="#cb21-197"></a></span>
+<span id="cb21-198"><a href="#cb21-198"></a></span>
+<span id="cb21-199"><a href="#cb21-199"></a>**Impact of Information:** There is always the chance that unobserved information (unobserved other variables or unobserved values of the variables we do have) is related to missingness for our variables, so to think through the potential for MNAR, more contextual information is necessary.</span>
+<span id="cb21-200"><a href="#cb21-200"></a></span>
+<span id="cb21-201"><a href="#cb21-201"></a></span>
+<span id="cb21-202"><a href="#cb21-202"></a></span>
+<span id="cb21-203"><a href="#cb21-203"></a>To explore these relationships, we can create TRUE/FALSE indicators of whether a variable is missing. In the plots below, we use <span class="in">`is.na(Ozone)`</span> to explore whether cases with missing ozone values are noticeably different from cases with observed ozone values in terms of <span class="in">`Solar.R`</span>.</span>
+<span id="cb21-204"><a href="#cb21-204"></a></span>
+<span id="cb21-205"><a href="#cb21-205"></a><span class="in">```{r miss_box_dens}</span></span>
+<span id="cb21-206"><a href="#cb21-206"></a><span class="co">#| eval: true</span></span>
+<span id="cb21-207"><a href="#cb21-207"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Solar.R)) <span class="sc">+</span> </span>
+<span id="cb21-208"><a href="#cb21-208"></a>    <span class="fu">geom_boxplot</span>()</span>
+<span id="cb21-209"><a href="#cb21-209"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R, <span class="at">color =</span> <span class="fu">is.na</span>(Ozone))) <span class="sc">+</span> </span>
+<span id="cb21-210"><a href="#cb21-210"></a>    <span class="fu">geom_density</span>()</span>
+<span id="cb21-211"><a href="#cb21-211"></a><span class="in">```</span></span>
+<span id="cb21-212"><a href="#cb21-212"></a></span>
+<span id="cb21-213"><a href="#cb21-213"></a>The above boxplots and density plots suggest that missing ozone is not strongly related to solar radiation levels. </span>
+<span id="cb21-214"><a href="#cb21-214"></a></span>
+<span id="cb21-215"><a href="#cb21-215"></a></span>
+<span id="cb21-216"><a href="#cb21-216"></a>We still should check if ozone missingness is related to the <span class="in">`Wind`</span>, <span class="in">`Temp`</span>, <span class="in">`Month`</span>, and <span class="in">`Day`</span> variables (to be done in Exercises).</span>
+<span id="cb21-217"><a href="#cb21-217"></a></span>
+<span id="cb21-218"><a href="#cb21-218"></a></span>
+<span id="cb21-219"><a href="#cb21-219"></a></span>
+<span id="cb21-220"><a href="#cb21-220"></a>In addition to checking if the *chance* of ozone missingness is related to `Solar.R`, we should check if the *values* of ozone could be predicted by <span class="in">`Solar.R`</span>. </span>
+<span id="cb21-221"><a href="#cb21-221"></a></span>
+<span id="cb21-222"><a href="#cb21-222"></a></span>
+<span id="cb21-223"><a href="#cb21-223"></a>In the scaterrplot below, we look at the relationship between <span class="in">`Ozone`</span> and <span class="in">`Solar.R`</span> and use vertical lines to indicate the <span class="in">`Solar.R`</span> values for cases that are missing <span class="in">`Ozone`</span>.</span>
+<span id="cb21-224"><a href="#cb21-224"></a></span>
+<span id="cb21-225"><a href="#cb21-225"></a><span class="ss">- </span>**Impact of Information:** We see that missing `Ozone` cases are within the observed span of `Solar.R`, so we would be ok with predicting `Ozone` from `Solar.R` because there would be no **extrapolation**.</span>
+<span id="cb21-226"><a href="#cb21-226"></a></span>
+<span id="cb21-227"><a href="#cb21-227"></a><span class="in">```{r miss_scatter_na_markers}</span></span>
+<span id="cb21-228"><a href="#cb21-228"></a><span class="co">#| eval: true</span></span>
+<span id="cb21-229"><a href="#cb21-229"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb21-230"><a href="#cb21-230"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-231"><a href="#cb21-231"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb21-232"><a href="#cb21-232"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Solar.R))</span>
+<span id="cb21-233"><a href="#cb21-233"></a><span class="in">```</span></span>
+<span id="cb21-234"><a href="#cb21-234"></a></span>
+<span id="cb21-235"><a href="#cb21-235"></a></span>
+<span id="cb21-236"><a href="#cb21-236"></a></span>
+<span id="cb21-237"><a href="#cb21-237"></a><span class="fu">## Exercises </span></span>
+<span id="cb21-238"><a href="#cb21-238"></a></span>
+<span id="cb21-239"><a href="#cb21-239"></a><span class="ss">2. </span>**Mechanism detection practice** Look at the boxplot + scatterplot pairs for Alternate Situations 1 and 2 below. How do these situations compare to our actual situation and to each other? What concerns might arise from using a model to impute <span class="in">`Ozone`</span>?</span>
+<span id="cb21-240"><a href="#cb21-240"></a></span>
+<span id="cb21-241"><a href="#cb21-241"></a><span class="in">```{r miss_scatter_na_markers_alt}</span></span>
+<span id="cb21-242"><a href="#cb21-242"></a><span class="co">#| eval: true</span></span>
+<span id="cb21-243"><a href="#cb21-243"></a><span class="co">#| echo: false</span></span>
+<span id="cb21-244"><a href="#cb21-244"></a>airquality_mod <span class="ot">&lt;-</span> airquality <span class="sc">|&gt;</span> </span>
+<span id="cb21-245"><a href="#cb21-245"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb21-246"><a href="#cb21-246"></a>        <span class="at">Solar.R_mod1 =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Ozone), <span class="dv">250</span> <span class="sc">+</span> Solar.R<span class="sc">/</span><span class="dv">4</span>, Solar.R),</span>
+<span id="cb21-247"><a href="#cb21-247"></a>        <span class="at">Solar.R_mod2 =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(Ozone), <span class="dv">250</span> <span class="sc">+</span> Solar.R<span class="sc">/</span><span class="dv">2</span>, Solar.R)</span>
+<span id="cb21-248"><a href="#cb21-248"></a>    )</span>
+<span id="cb21-249"><a href="#cb21-249"></a></span>
+<span id="cb21-250"><a href="#cb21-250"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Solar.R_mod1)) <span class="sc">+</span> </span>
+<span id="cb21-251"><a href="#cb21-251"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb21-252"><a href="#cb21-252"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 1"</span>)</span>
+<span id="cb21-253"><a href="#cb21-253"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R_mod1, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb21-254"><a href="#cb21-254"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-255"><a href="#cb21-255"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb21-256"><a href="#cb21-256"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Solar.R_mod1)) <span class="sc">+</span></span>
+<span id="cb21-257"><a href="#cb21-257"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 1"</span>)</span>
+<span id="cb21-258"><a href="#cb21-258"></a></span>
+<span id="cb21-259"><a href="#cb21-259"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Solar.R_mod2)) <span class="sc">+</span> </span>
+<span id="cb21-260"><a href="#cb21-260"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb21-261"><a href="#cb21-261"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 2"</span>)</span>
+<span id="cb21-262"><a href="#cb21-262"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Solar.R_mod2, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb21-263"><a href="#cb21-263"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-264"><a href="#cb21-264"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb21-265"><a href="#cb21-265"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Solar.R_mod2)) <span class="sc">+</span></span>
+<span id="cb21-266"><a href="#cb21-266"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Alternate Situation 2"</span>)</span>
+<span id="cb21-267"><a href="#cb21-267"></a><span class="in">```</span></span>
+<span id="cb21-268"><a href="#cb21-268"></a></span>
+<span id="cb21-269"><a href="#cb21-269"></a><span class="ss">3. </span>**Ozone mechanism detection** Continue the investigation of missingness for <span class="in">`Ozone`</span>. </span>
+<span id="cb21-270"><a href="#cb21-270"></a></span>
+<span id="cb21-271"><a href="#cb21-271"></a>We want to see how <span class="in">`Month`</span>, <span class="in">`Wind`</span>, and <span class="in">`Temp`</span> relate to the chance of missingness for <span class="in">`Ozone`</span> and to the value of <span class="in">`Ozone`</span>.</span>
+<span id="cb21-272"><a href="#cb21-272"></a></span>
+<span id="cb21-273"><a href="#cb21-273"></a>Does it look like a linear regression model (perhaps with variable transformations) could be effective in imputing the missing ozone data?</span>
+<span id="cb21-274"><a href="#cb21-274"></a></span>
+<span id="cb21-277"><a href="#cb21-277"></a><span class="in">```{r}</span></span>
+<span id="cb21-278"><a href="#cb21-278"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Month)) <span class="sc">+</span> </span>
+<span id="cb21-279"><a href="#cb21-279"></a>    <span class="fu">geom_boxplot</span>()</span>
+<span id="cb21-280"><a href="#cb21-280"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Month, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb21-281"><a href="#cb21-281"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-282"><a href="#cb21-282"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb21-283"><a href="#cb21-283"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Month))</span>
+<span id="cb21-284"><a href="#cb21-284"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Wind)) <span class="sc">+</span> </span>
+<span id="cb21-285"><a href="#cb21-285"></a>    <span class="fu">geom_boxplot</span>()</span>
+<span id="cb21-286"><a href="#cb21-286"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Wind, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb21-287"><a href="#cb21-287"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-288"><a href="#cb21-288"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb21-289"><a href="#cb21-289"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Wind))</span>
+<span id="cb21-290"><a href="#cb21-290"></a><span class="fu">ggplot</span>(airquality, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">is.na</span>(Ozone), <span class="at">y =</span> Temp)) <span class="sc">+</span> </span>
+<span id="cb21-291"><a href="#cb21-291"></a>    <span class="fu">geom_boxplot</span>()</span>
+<span id="cb21-292"><a href="#cb21-292"></a><span class="fu">ggplot</span>(airquality_mod, <span class="fu">aes</span>(<span class="at">x =</span> Temp, <span class="at">y =</span> Ozone)) <span class="sc">+</span></span>
+<span id="cb21-293"><a href="#cb21-293"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-294"><a href="#cb21-294"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb21-295"><a href="#cb21-295"></a>    <span class="fu">geom_vline</span>(<span class="at">data =</span> airquality_mod <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(Ozone)), <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xintercept =</span> Temp))</span>
+<span id="cb21-296"><a href="#cb21-296"></a></span>
+<span id="cb21-297"><a href="#cb21-297"></a><span class="in">```</span></span>
+<span id="cb21-298"><a href="#cb21-298"></a></span>
+<span id="cb21-299"><a href="#cb21-299"></a></span>
+<span id="cb21-300"><a href="#cb21-300"></a></span>
+<span id="cb21-301"><a href="#cb21-301"></a><span class="fu">## Regression Imputation </span></span>
+<span id="cb21-302"><a href="#cb21-302"></a></span>
+<span id="cb21-303"><a href="#cb21-303"></a>When a model is built and used to generate a single set of predictions for missing values, this is known as **single imputation**. </span>
+<span id="cb21-304"><a href="#cb21-304"></a></span>
+<span id="cb21-305"><a href="#cb21-305"></a></span>
+<span id="cb21-306"><a href="#cb21-306"></a><span class="ss">- </span>When using singly imputed data in subsequent modeling, the uncertainty in estimates tends to be underestimated. This means that:</span>
+<span id="cb21-307"><a href="#cb21-307"></a><span class="ss">    - </span>Standard errors are lower than they should be.</span>
+<span id="cb21-308"><a href="#cb21-308"></a><span class="ss">    - </span>Confidence intervals won't contain the true parameter value the "advertised" percentage of times</span>
+<span id="cb21-309"><a href="#cb21-309"></a><span class="ss">        - </span>e.g., 95% confidence intervals will not contain the truth in 95% of samples--the coverage probability will be less than 95%</span>
+<span id="cb21-310"><a href="#cb21-310"></a></span>
+<span id="cb21-311"><a href="#cb21-311"></a></span>
+<span id="cb21-312"><a href="#cb21-312"></a>In **multiple imputation**, multiple imputed datasets are generated with different values for the filled-in data. </span>
+<span id="cb21-313"><a href="#cb21-313"></a></span>
+<span id="cb21-314"><a href="#cb21-314"></a></span>
+<span id="cb21-315"><a href="#cb21-315"></a><span class="ss">- </span>Subsequent models are fit on each of these datasets, and both estimates and uncertainty measures are pooled across all of these fits. </span>
+<span id="cb21-316"><a href="#cb21-316"></a><span class="ss">- </span>Multiple imputation more accurately estimates uncertainty measures.</span>
+<span id="cb21-317"><a href="#cb21-317"></a></span>
+<span id="cb21-318"><a href="#cb21-318"></a><span class="fu">## Simulation Studies </span></span>
+<span id="cb21-319"><a href="#cb21-319"></a></span>
+<span id="cb21-320"><a href="#cb21-320"></a>We can use a **simulation study** to investigate the statistical properties described above.</span>
+<span id="cb21-321"><a href="#cb21-321"></a></span>
+<span id="cb21-322"><a href="#cb21-322"></a>::: {.incremental}</span>
+<span id="cb21-323"><a href="#cb21-323"></a></span>
+<span id="cb21-324"><a href="#cb21-324"></a><span class="ss">1. </span>Generate (simulate) data where we are in control of missing data mechanisms and the true relationship between an outcome and the predictors.</span>
+<span id="cb21-325"><a href="#cb21-325"></a><span class="ss">2. </span>On that simulated data, use **single imputation** to fill in the missing values. Fit the desired model, and obtain a confidence interval for a coefficient of interest.</span>
+<span id="cb21-326"><a href="#cb21-326"></a><span class="ss">3. </span>On that simulated data, use **multiple imputation** to fill in the missing values. Fit the desired models on all imputed datasets, pool results, and obtain a confidence interval for a coefficient of interest.</span>
+<span id="cb21-327"><a href="#cb21-327"></a><span class="ss">4. </span>Steps 1 - 3 are repeated a lot of times (<span class="in">`num_simulations &lt;- 1000`</span>) to see how things work out in lots of different samples.</span>
+<span id="cb21-328"><a href="#cb21-328"></a><span class="ss">5. </span>Summarize the performance of single and multiple imputation across the <span class="in">`num_simulations`</span> simulations.</span>
+<span id="cb21-329"><a href="#cb21-329"></a></span>
+<span id="cb21-330"><a href="#cb21-330"></a>:::</span>
+<span id="cb21-331"><a href="#cb21-331"></a></span>
+<span id="cb21-332"><a href="#cb21-332"></a>We will slowly step through the simulation study code below. We will pause frequently for you to add comments documenting what is happening. </span>
+<span id="cb21-333"><a href="#cb21-333"></a></span>
+<span id="cb21-334"><a href="#cb21-334"></a><span class="in">```{r mult_single_sim_study, eval = FALSE}</span></span>
+<span id="cb21-335"><a href="#cb21-335"></a><span class="fu">set.seed</span>(<span class="dv">224</span>)</span>
+<span id="cb21-336"><a href="#cb21-336"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb21-337"><a href="#cb21-337"></a>ci_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="at">length =</span> num_simulations)</span>
+<span id="cb21-338"><a href="#cb21-338"></a></span>
+<span id="cb21-339"><a href="#cb21-339"></a><span class="fu">system.time</span>({</span>
+<span id="cb21-340"><a href="#cb21-340"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_simulations) {</span>
+<span id="cb21-341"><a href="#cb21-341"></a>    <span class="co"># Simulate data</span></span>
+<span id="cb21-342"><a href="#cb21-342"></a>    n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb21-343"><a href="#cb21-343"></a>    sim_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb21-344"><a href="#cb21-344"></a>        <span class="at">x1 =</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>),</span>
+<span id="cb21-345"><a href="#cb21-345"></a>        <span class="at">x2 =</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb21-346"><a href="#cb21-346"></a>        <span class="at">x2_miss_bool =</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> x1<span class="sc">/</span><span class="dv">2</span>),</span>
+<span id="cb21-347"><a href="#cb21-347"></a>        <span class="at">x2_NA =</span> <span class="fu">if_else</span>(x2_miss_bool <span class="sc">==</span> <span class="dv">1</span>, <span class="cn">NA</span>, x2),</span>
+<span id="cb21-348"><a href="#cb21-348"></a>        <span class="at">y =</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb21-349"><a href="#cb21-349"></a>    )</span>
+<span id="cb21-350"><a href="#cb21-350"></a>    </span>
+<span id="cb21-351"><a href="#cb21-351"></a>    <span class="co"># Single imputation ---------------</span></span>
+<span id="cb21-352"><a href="#cb21-352"></a>    mice_obj <span class="ot">&lt;-</span> <span class="fu">mice</span>(sim_data <span class="sc">|&gt;</span> <span class="fu">select</span>(x1, x2_NA, y), <span class="at">m =</span> <span class="dv">1</span>, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">printFlag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-353"><a href="#cb21-353"></a>    si_mod <span class="ot">&lt;-</span> <span class="fu">with</span>(mice_obj, <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2_NA))</span>
+<span id="cb21-354"><a href="#cb21-354"></a>    ci_single <span class="ot">&lt;-</span> si_mod<span class="sc">$</span>analyses[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> <span class="fu">confint</span>(<span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb21-355"><a href="#cb21-355"></a>    ci_single <span class="ot">&lt;-</span> ci_single[<span class="st">"x2_NA"</span>,]</span>
+<span id="cb21-356"><a href="#cb21-356"></a>    </span>
+<span id="cb21-357"><a href="#cb21-357"></a>    <span class="co"># Multiple imputation -------------</span></span>
+<span id="cb21-358"><a href="#cb21-358"></a>    mice_obj <span class="ot">&lt;-</span> <span class="fu">mice</span>(sim_data <span class="sc">|&gt;</span> <span class="fu">select</span>(x1, x2_NA, y), <span class="at">m =</span> <span class="dv">10</span>, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">printFlag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-359"><a href="#cb21-359"></a>    mi_mods <span class="ot">&lt;-</span> <span class="fu">with</span>(mice_obj, <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2_NA))</span>
+<span id="cb21-360"><a href="#cb21-360"></a>    pooled_res <span class="ot">&lt;-</span> <span class="fu">pool</span>(mi_mods)</span>
+<span id="cb21-361"><a href="#cb21-361"></a>    summ_pooled_res <span class="ot">&lt;-</span> <span class="fu">summary</span>(pooled_res, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb21-362"><a href="#cb21-362"></a>    ci_multiple_lower <span class="ot">&lt;-</span> summ_pooled_res <span class="sc">|&gt;</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x2_NA"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">2.5 %</span><span class="st">`</span>)</span>
+<span id="cb21-363"><a href="#cb21-363"></a>    ci_multiple_upper <span class="ot">&lt;-</span> summ_pooled_res <span class="sc">|&gt;</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x2_NA"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(<span class="st">`</span><span class="at">97.5 %</span><span class="st">`</span>)</span>
+<span id="cb21-364"><a href="#cb21-364"></a>    </span>
+<span id="cb21-365"><a href="#cb21-365"></a>    <span class="co"># Store CI information</span></span>
+<span id="cb21-366"><a href="#cb21-366"></a>    ci_list[[i]] <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb21-367"><a href="#cb21-367"></a>        <span class="at">ci_lower =</span> <span class="fu">c</span>(</span>
+<span id="cb21-368"><a href="#cb21-368"></a>            ci_single[<span class="dv">1</span>],</span>
+<span id="cb21-369"><a href="#cb21-369"></a>            ci_multiple_lower</span>
+<span id="cb21-370"><a href="#cb21-370"></a>        ),</span>
+<span id="cb21-371"><a href="#cb21-371"></a>        <span class="at">ci_upper =</span> <span class="fu">c</span>(</span>
+<span id="cb21-372"><a href="#cb21-372"></a>            ci_single[<span class="dv">2</span>],</span>
+<span id="cb21-373"><a href="#cb21-373"></a>            ci_multiple_upper</span>
+<span id="cb21-374"><a href="#cb21-374"></a>        ),</span>
+<span id="cb21-375"><a href="#cb21-375"></a>        <span class="at">which_imp =</span> <span class="fu">c</span>(<span class="st">"single"</span>, <span class="st">"multiple"</span>)</span>
+<span id="cb21-376"><a href="#cb21-376"></a>    )</span>
+<span id="cb21-377"><a href="#cb21-377"></a>}</span>
+<span id="cb21-378"><a href="#cb21-378"></a>})</span>
+<span id="cb21-379"><a href="#cb21-379"></a><span class="in">```</span></span>
+<span id="cb21-380"><a href="#cb21-380"></a></span>
+<span id="cb21-381"><a href="#cb21-381"></a>Below we compute the confidence interval (CI) coverage probability (fraction of times the CI contains the true value of <span class="in">`1`</span>) for the CIs generated from single and multiple imputation:</span>
+<span id="cb21-382"><a href="#cb21-382"></a></span>
+<span id="cb21-383"><a href="#cb21-383"></a><span class="in">```{r mult_single_sim_study_summ, eval=FALSE}</span></span>
+<span id="cb21-384"><a href="#cb21-384"></a>ci_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ci_list)</span>
+<span id="cb21-385"><a href="#cb21-385"></a>ci_data <span class="sc">|&gt;</span> </span>
+<span id="cb21-386"><a href="#cb21-386"></a>    <span class="fu">mutate</span>(<span class="at">contains_truth =</span> ci_lower <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> ci_upper <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-387"><a href="#cb21-387"></a>    <span class="fu">group_by</span>(which_imp) <span class="sc">|&gt;</span> </span>
+<span id="cb21-388"><a href="#cb21-388"></a>    <span class="fu">summarize</span>(<span class="at">frac_contains_truth =</span> <span class="fu">mean</span>(contains_truth))</span>
+<span id="cb21-389"><a href="#cb21-389"></a><span class="in">```</span></span>
+<span id="cb21-390"><a href="#cb21-390"></a></span>
+<span id="cb21-391"><a href="#cb21-391"></a><span class="fu">## Done!</span></span>
+<span id="cb21-392"><a href="#cb21-392"></a></span>
+<span id="cb21-393"><a href="#cb21-393"></a><span class="ss">- </span>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
