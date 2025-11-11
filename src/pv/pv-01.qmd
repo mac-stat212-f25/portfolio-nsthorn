@@ -1,5 +1,113 @@
 ---
-title: "Professional Viz Sample"
+title: "Professional Viz"
 ---
 
-Add content here
+```{r}
+#loading in data
+library(tidyverse)
+library(nycflights13)
+library(lubridate)
+library(streamgraph)
+library(ggplot2)
+library(patchwork)
+library(extrafont)
+library(cowplot)
+font_import()
+flights <- nycflights13::flights
+weather <- nycflights13::weather
+```
+
+```{r}
+#looking at what variables we are looking at
+weather <- as.data.frame(weather)
+head(weather)
+flights <- as.data.frame(flights)
+head(flights)
+class(flights)
+loadfonts(device = "win")
+```
+
+```{r}
+# Wrangling data
+new_weather <- weather |>
+  mutate(date = date(time_hour)) |> 
+  group_by(date) |> 
+  summarize(avg_visib = mean(visib, na.rm = TRUE), avg_temp = mean(temp, na.rm = TRUE), max_temp = max(temp, na.rm = TRUE), min_temp= min(temp, na.rm = TRUE), total_precip = sum(precip, na.rm = TRUE))
+
+arrival_delays <- flights |> 
+  mutate(date = date(time_hour)) |> 
+  filter(arr_delay > 0) |> 
+  group_by(date) |>
+  summarize(avg_adelay = mean(arr_delay, na.rm = TRUE), min_adelay = min(arr_delay,na.rm = TRUE), max_adelay = max(arr_delay, na.rm = TRUE))
+
+departure_delays <- flights |> 
+  mutate(date = date(time_hour)) |> 
+  filter(dep_delay > 0) |> 
+  group_by(date) |>
+  summarize(avg_ddelay = mean(dep_delay, na.rm = TRUE), min_ddelay = min(dep_delay,na.rm = TRUE), max_ddelay = max(dep_delay, na.rm = TRUE), q1_ddelay = quantile(dep_delay, 0.25), q3_ddelay = quantile(dep_delay, 0.75))
+
+arrival_predictions <- predict(loess(formula = avg_adelay ~ yday(date), data = arrival_delays), newdata = seq(1,365,1))
+
+departure_predictions <- predict(loess(formula = avg_ddelay ~ yday(date), data = departure_delays), newdata = seq(1,365,1))
+
+noteable_delays <- data.frame(name = c("Max Arrival Delay", "Min Arrival Delay", "Max Departure Delay", "Min Departue Delay"),
+                              date = c(as.Date(match(max(arrival_predictions), arrival_predictions), origin = "2013-01-01"), as.Date(match(min(arrival_predictions), arrival_predictions), origin = "2013-01-01"), as.Date(match(max(departure_predictions), departure_predictions), origin = "2013-01-01"), as.Date(match(min(departure_predictions), departure_predictions), origin = "2013-01-01")),
+                              delay_time = c(max(arrival_predictions)+0.45, min(arrival_predictions)+0.45, max(departure_predictions)+0.45, min(departure_predictions)+0.45))
+
+prec_predictions <- predict(loess(formula = total_precip  ~ yday(date), data = new_weather))
+
+
+min_precip<- min(prec_predictions)
+
+max_precip <- max(prec_predictions)
+
+critical_precip <- data.frame("Date" = c(as.Date(match(max_precip, prec_predictions), origin = "2013-01-01"),as.Date(match(min_precip, prec_predictions), origin = "2013-01-01")),
+                              "precip" = c(max_precip, min_precip))
+critical_precip
+
+prec_predictions[150:250]
+
+as_date(168,origin = "2013-01-01")
+
+```
+
+
+```{r}
+precip_plot <- ggplot(new_weather, aes(y= total_precip, x = date))+
+  geom_smooth(se = FALSE, color = "#D5DCE2")+
+  geom_vline(xintercept = as_date("2013-06-18"), linetype="dotted", color ="grey")+
+  geom_vline(xintercept = as_date("2013-09-28"), linetype="dotted", color ="grey")+
+  annotate(geom = "text",
+           x = as_date("2013-02-01"),
+           y = 0.5,
+           label = "Dasehed lines signify \n critical points in \n the trend of total precipitation",
+           size = 2)+
+  labs(y = "Total Precipatation (Inches)", x = "Date in 2013")+
+  theme_classic()+
+  theme(text=element_text(size=7,family="Times New Roman"))
+
+precip_plot
+
+
+delay_plot <- ggplot()+
+  geom_smooth(data = arrival_delays, aes(y = avg_adelay, x = date, color = "Arrival Delays"), se = FALSE)+
+  geom_smooth(data = departure_delays, aes(y = avg_ddelay, x = date, color = "Departure Delays"), se = FALSE)+
+  geom_point(data = noteable_delays, aes(x = date, y = delay_time), shape = 25, color = "#1D252A", fill = "#1D252A")+
+  geom_vline(xintercept = as_date("2013-06-18"), linetype="dotted", color ="grey")+
+  geom_vline(xintercept = as_date("2013-09-28"), linetype="dotted", color ="grey")+
+  labs(color = "Legend",
+       y = "Length of Delay (Minutes)")+
+  scale_color_manual(name = "Delay Type", values = c("Arrival Delays" = "#566C7B", "Departure Delays" = "#BAC6CF"))+
+  annotate(geom = "text",
+           x = as_date("2013-11-01"),
+           y = 42,
+           label = "Triangles signify \n critical points in \n the trends of delays",
+           size = 2)+
+  theme_classic()+
+  theme(legend.position=c(0.15,0.85), text=element_text(size=7,family="Times New Roman"),axis.title.x = element_blank(), axis.text.x = element_blank(),axis.ticks.x = element_blank(), axis.line.x = element_blank())
+
+wrap_plots(delay_plot+ precip_plot + plot_layout(axes = "collect", guides = "collect", ncol = 1))+
+  plot_annotation(title = "Flight Delays and Precipitation", subtitle = "Trends of flight delays and total precipitation observed at \n JFK airport in 2013 as predicted using a leoss model", caption = "We can see that the days that have a higher trend of percipatiation are close to the days that tend \n to have trends of longer departure and arrival delays. The shape of these graphs are \n very similar, suggesting a correlaton between total precipitation and flight delays. \n Author: Nico Thorn     Date: 11/10/2025   Source: NYCflights13") & theme(text=element_text(family="Times New Roman"))
+
+```
+
