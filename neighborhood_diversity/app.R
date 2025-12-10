@@ -31,12 +31,19 @@ ui <- fluidPage(
              label = "Select a metropolitan area",
              choices = metro_names,
              selected = "Dalas-Fort Worth"
-           )
+           ),
+           sliderInput(inputId = "Smooth",
+              label = "Span Parameter",
+              min = 0,
+              max = 1,
+              value= 0.3)
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("distPlot")
+           plotOutput("distPlot"),
+           plotOutput("map"),
+           plotOutput("barchart")
         )
     )
 )
@@ -49,9 +56,11 @@ server <- function(input, output) {
         plot_data <- data_by_dist |> filter(metro_name == input$city)
         # draw the histogram with the specified number of bins
         ggplot(plot_data, aes(x = distmiles, y = entropy))+
-          geom_point()
+          geom_point()+
+          geom_smooth(span = input$Smooth, se = FALSE)
     })
 }
 
 # Run the application
 shinyApp(ui = ui, server = server)
+

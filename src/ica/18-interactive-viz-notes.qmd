@@ -12,6 +12,8 @@ By the end of this lesson, you should be able to:
 
 ```{r setup_18, echo=FALSE, message=FALSE}
 library(tidyverse)
+library(shiny)
+library(gapminder)
 ```
 
 
@@ -118,8 +120,10 @@ Save the two files, [diverse_data_by_dist.rds](https://mac-stat.github.io/data/d
 
 ```{r reading}
 #| eval: false
-data_by_dist <- read_rds("relative path to diverse_data_by_dist.rds")
-data_by_year <- read_csv("relative path to diverse_data_by_year.csv")
+data_by_dist <- read_rds("..\\..\\neighborhood_diversity\\data\\diverse_data_by_dist.rds")
+data_by_year <- read_csv("..\\..\\neighborhood_diversity\\data\\diverse_data_by_year.csv")
+
+metro_names <- data_by_dist |> pull(metro_name) |> unique()
 ```
 
 **Getting acquainted with the app and underlying code:** Take a few minutes to explore the code:
@@ -182,6 +186,7 @@ Add the following two user inputs to your app:
     - This parameter varies from 0 to 1. Lower values result in a wiggly smoothing line, and higher values result in a smoother line.
 
 Use the Shiny cheatsheet to find the `*Input()` functions that correspond to the two inputs above. Add them to the appropriate place within the `ui` object. Use commas to separate the inputs.
+
 
 ::: {.callout-tip title="Parentheses Pandemonium"}
 Carefully formatting your code will be crucial here! With `shiny` UIs, it is very easy to lose or mismatch parentheses, which leads to frustrating errors. My suggestion is to place parentheses as follow:
@@ -289,7 +294,6 @@ Run the app and check that the scatterplot displays and reacts to the chosen cit
 
 
 As part of [Homework 9](https://hash-mac.github.io/stat212site-f25/homeworks/homework9.html), you will finish this Shiny app.
-
 
 
 ## `plotly` package
