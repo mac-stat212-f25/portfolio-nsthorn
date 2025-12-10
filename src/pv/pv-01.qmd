@@ -7,7 +7,6 @@ title: "Professional Viz"
 library(tidyverse)
 library(nycflights13)
 library(lubridate)
-library(streamgraph)
 library(ggplot2)
 library(patchwork)
 library(extrafont)

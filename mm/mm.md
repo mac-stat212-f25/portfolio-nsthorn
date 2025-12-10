@@ -19,3 +19,13 @@
 ![MMDD-1003-baser.png](MMDD-1003-baser.png)
 
 ![MMDD-1006-loops.png](MMDD-1006-loops.png)
+
+![MMDD-JSON.png](MMDD-JSON.png)
+
+![MMDD-Webscraping.png](MMDD-Webscraping.png)
+
+![MMDD-databases.png](MMDD-databases.png)
+
+![MMDD-effectiveviz.png](MMDD-effectiveviz.png)
+
+![MMDD-interactive.png](MMDD-interactive.png)

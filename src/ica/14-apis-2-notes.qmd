@@ -361,7 +361,7 @@ req_pt <- create_nyt_url(query = "Penn & Teller", key = times_key)
 We can use `req_perform()` to send out the request and `resp_body_json()` to parse the resulting JSON:
 
 ```{r nyt_responses}
-resp_pt <- req_pt |> req_perform() |> resp_body_json(simplifyVector = TRUE)
+#resp_pt <- req_pt |> req_perform() |> resp_body_json(simplifyVector = TRUE)
 ```
 
 
@@ -383,31 +383,31 @@ Using base R subsetting, we can access elements of a list in three ways:
 
 ```{r list_access1}
 # This gets the first element of the list
-resp_pt[[1]]
+# resp_pt[[1]]
 ```
 
 
 - By *name* with double square brackets `[[`: (note that list elements are not always named, so this won't always be possible)
 
 ```{r list_access2}
-# Accessing by name directly
-resp_pt[["status"]]
-
-# Accessing via a variable
-which_element <- "status"
-resp_pt[[which_element]]
+# # Accessing by name directly
+# resp_pt[["status"]]
+# 
+# # Accessing via a variable
+# which_element <- "status"
+# resp_pt[[which_element]]
 ```
 
 - By *name* with a dollar sign `$`: (Helpful tip: For this mode of access, RStudio allows tab completion to fill in the full name)
 
 ```{r list_access3}
-resp_pt$status
+# resp_pt$status
 ```
 
 We can retrieve these *nested* attributes by sequentially accessing the object keys from the outside in. For example, the `meta` element would be accessed as follows:
 
 ```{r list_access4}
-resp_pt$response$meta
+# resp_pt$response$meta
 ```
 
 
@@ -417,12 +417,12 @@ resp_pt$response$meta
 - the number of `hits` (number of search results) within the `meta` object
 - the abstracts and leading paragraphs of the articles found in the search
 ```{r}
-resp_pt$copyright
-
-resp_pt$response$meta$hits
-
-resp_pt$response$docs$abstract
-resp_pt$response$docs$lead_paragraph
+# resp_pt$copyright
+# 
+# resp_pt$response$meta$hits
+# 
+# resp_pt$response$docs$abstract
+# resp_pt$response$docs$lead_paragraph
 ```
 
 
