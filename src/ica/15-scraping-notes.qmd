@@ -173,14 +173,29 @@ link_list <- c("https://www.nih.gov/news-events/news-releases?page=0",
 "https://www.nih.gov/news-events/news-releases?page=4")
 
 extractor <- function(link){
-  nih <- read_html(link)
-  article_titles <- nih |>
+  article <- read_html(link)
+  article_titles <- article |>
     html_elements(".thumbnail-teaser__heading") |>
     html_text()
-head(article_titles)
+  Sys.sleep(2)
+  date_descriptions <- article |> 
+    html_elements(".thumbnail-teaser__description") |> 
+    html_text()
+  Sys.sleep(2)
+  return(data.frame(article_title = article_titles, date_description = date_descriptions))
 }
 
-map(link_list, extractor)
+
+article_df <- data.frame(article_title = character(),
+                         date_description = character()
+)
+for(link in link_list){
+  headings <- extractor(link)
+  article_df <- bind_rows(article_df, headings)
+}
+
+head(article_df)
+
 ```
 
 
