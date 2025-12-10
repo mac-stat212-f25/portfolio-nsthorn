@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.32">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>11 Loops+Iter P1 – COMP/STAT212 Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
@@ -54,6 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -77,7 +81,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-b6165e882820e9cbe81d0573c00a9ad9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-336fc07c9e36db0483797e7526239151.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-b6165e882820e9cbe81d0573c00a9ad9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap-b6165e882820e9cbe81d0573c00a9ad9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -103,7 +108,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script type="text/javascript" charset="UTF-8">
+}</script>
+
+<script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
 cookieconsent.run({
   "notice_banner_type":"simple",
@@ -118,9 +125,14 @@ cookieconsent.run({
 "language":"en"
   });
 });
-</script><style>html{ scroll-behavior: smooth; }</style>
+</script> 
+  
+<style>html{ scroll-behavior: smooth; }</style>
+
+
 <link rel="stylesheet" href="../../style/custom.css">
 </head>
+
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
@@ -286,7 +298,9 @@ cookieconsent.run({
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -297,11 +311,16 @@ cookieconsent.run({
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../../index.html" class="sidebar-logo-link">
-      <img src="../../assets/sidebar-logo.png" alt="Random negative space illustration" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="../../assets/sidebar-logo.png" alt="Random negative space illustration" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../../">Nico Thorn</a> 
         <div class="sidebar-tools-main">
@@ -321,7 +340,7 @@ cookieconsent.run({
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -335,14 +354,14 @@ cookieconsent.run({
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../src/pv/pv-01.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Professional Viz</span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -351,8 +370,8 @@ cookieconsent.run({
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../src/tt/hw01-tt.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Homework 01</span></a>
   </div>
@@ -368,7 +387,7 @@ cookieconsent.run({
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
@@ -377,8 +396,8 @@ cookieconsent.run({
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../src/ica/cleaning.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cleaning SFO Weather Data</span></a>
   </div>
@@ -428,8 +447,28 @@ cookieconsent.run({
   <a href="../../src/ica/12-iteration-2-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12 Loops+Iter P2</span></a>
   </div>
 </li>
-      </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/14-apis-2-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">14 APIs P2</span></a>
+  </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/15-scraping-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">15 Web scraping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/16-databases-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">16 Databases and SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/18-interactive-viz-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">18 Interactive Viz</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
@@ -438,8 +477,8 @@ cookieconsent.run({
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../src/appx/appx-sample1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Appendix Sample 1</span></a>
   </div>
@@ -455,34 +494,39 @@ cookieconsent.run({
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">🧩 Learning Goals</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">🧩 Learning Goals</a></li>
   <li><a href="#iteration" id="toc-iteration" class="nav-link" data-scroll-target="#iteration">Iteration</a></li>
   <li><a href="#purposes-of-iteration" id="toc-purposes-of-iteration" class="nav-link" data-scroll-target="#purposes-of-iteration">Purposes of Iteration</a></li>
-  <li>
-<a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><code>for</code> loops</a>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><code>for</code> loops</a>
   <ul class="collapse">
-<li><a href="#for-loops-and-memory-allocation" id="toc-for-loops-and-memory-allocation" class="nav-link" data-scroll-target="#for-loops-and-memory-allocation"><code>for</code> loops and memory allocation</a></li>
-  </ul>
-</li>
+  <li><a href="#for-loops-and-memory-allocation" id="toc-for-loops-and-memory-allocation" class="nav-link" data-scroll-target="#for-loops-and-memory-allocation"><code>for</code> loops and memory allocation</a></li>
+  </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#iteration-across-data-frame-columns" id="toc-iteration-across-data-frame-columns" class="nav-link" data-scroll-target="#iteration-across-data-frame-columns">Iteration <code>across</code> data frame columns</a></li>
   <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1">Exercises</a></li>
   <li><a href="#case-study-performing-many-different-versions-of-an-analysis" id="toc-case-study-performing-many-different-versions-of-an-analysis" class="nav-link" data-scroll-target="#case-study-performing-many-different-versions-of-an-analysis">Case study: performing many different versions of an analysis</a></li>
   <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2">Exercises</a></li>
   <li><a href="#done" id="toc-done" class="nav-link" data-scroll-target="#done">Done!</a></li>
-  </ul></nav>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../src/ica/cleaning.html">In-Class Activities</a></li><li class="breadcrumb-item"><a href="../../src/ica/11-iteration-1-notes.html"><span class="chapter-title">11 Loops+Iter P1</span></a></li></ol></nav><div class="quarto-title">
+<main class="content column-body" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../src/ica/cleaning.html">In-Class Activities</a></li><li class="breadcrumb-item"><a href="../../src/ica/11-iteration-1-notes.html"><span class="chapter-title">11 Loops+Iter P1</span></a></li></ol></nav>
+<div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span class="chapter-title">11 Loops+Iter P1</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
@@ -497,18 +541,24 @@ cookieconsent.run({
   
 
 
-</header><section id="learning-goals" class="level2"><h2 class="anchored" data-anchor-id="learning-goals">🧩 Learning Goals</h2>
+</header>
+
+
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">🧩 Learning Goals</h2>
 <p>By the end of this lesson, you should be able to:</p>
 <ul>
 <li>Write a <code>for</code> loop in R to handle repeated tasks
 <ul>
-<li>Use <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> and <code><a href="https://rdrr.io/r/base/seq.html">seq_len()</a></code> to iterate over vectors or rows of a data frame</li>
+<li>Use <code>seq_along()</code> and <code>seq_len()</code> to iterate over vectors or rows of a data frame</li>
 <li>Store output from a <code>for</code> loop in a list or other storage container</li>
-</ul>
-</li>
+</ul></li>
 <li>Recognize that vectorized functions help us avoid <code>for</code> loops in many situations</li>
 <li>Use the <code>across()</code> function to wrangle multiple variables simultaneously</li>
-</ul></section><section id="iteration" class="level2"><h2 class="anchored" data-anchor-id="iteration">Iteration</h2>
+</ul>
+</section>
+<section id="iteration" class="level2">
+<h2 class="anchored" data-anchor-id="iteration">Iteration</h2>
 <p>When we want to reuse code, we can use:</p>
 <ul>
 <li>functions to save the steps of the task</li>
@@ -519,7 +569,10 @@ cookieconsent.run({
 <li>Iterating using a <code>for</code> loop &amp; how to do it appropriately in R (today)</li>
 <li>Iterating <code>across</code> data frame columns (today)</li>
 <li>Iterating using <code>map</code> and <code>walk</code> for iteration, instead of a <code>for</code> loop (next class)</li>
-</ul></section><section id="purposes-of-iteration" class="level2"><h2 class="anchored" data-anchor-id="purposes-of-iteration">Purposes of Iteration</h2>
+</ul>
+</section>
+<section id="purposes-of-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="purposes-of-iteration">Purposes of Iteration</h2>
 <p><strong>Creating or saving a new object</strong></p>
 <ul>
 <li>Performing an action with a return output</li>
@@ -530,20 +583,24 @@ cookieconsent.run({
 <p><strong>Side effects</strong></p>
 <ul>
 <li>Performing an action without a R return output</li>
-<li>Ex: saving data using <code>write_csv()</code> or saving a plot with <code><a href="https://rdrr.io/r/grDevices/png.html">png()</a></code>
-</li>
+<li>Ex: saving data using <code>write_csv()</code> or saving a plot with <code>png()</code></li>
 <li>We don’t need to worry about storage in R.</li>
 <li>We could use <code>walk()</code> for this…</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section><section id="for-loops" class="level2"><h2 class="anchored" data-anchor-id="for-loops">
-<code>for</code> loops</h2>
+</section>
+<section id="for-loops" class="level2">
+<h2 class="anchored" data-anchor-id="for-loops"><code>for</code> loops</h2>
 <p>In R, <code>for</code> loops have the following general structure:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">for</span> (i <span class="cf">in</span> some_vector) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">for</span> (i <span class="cf">in</span> some_vector) {</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    <span class="co"># Code to do stuff based on i</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -551,25 +608,30 @@ cookieconsent.run({
 <p><code>some_vector</code> can be <strong>any</strong> vector, including:</p>
 <ul>
 <li>An <strong>indexing</strong> integer vector: <code>1:3</code> [Most common!]</li>
-<li>A character vector: <code>c("group1", "group2", "group3")</code>
-</li>
+<li>A character vector: <code>c("group1", "group2", "group3")</code></li>
 <li>A vector of any other class</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>, <span class="st">"group3"</span>) <span class="co"># a vector to iterate over</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"group1"</span>, <span class="st">"group2"</span>, <span class="st">"group3"</span>) <span class="co"># a vector to iterate over</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a> </span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) { <span class="co"># i: index</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a>    <span class="fu">print</span>(groups[i])</span>
 <span id="cb3-5"><a href="#cb3-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "group1"
 [1] "group2"
 [1] "group3"</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="cf">for</span> (g <span class="cf">in</span> groups) { <span class="co"># iterating over the vector</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="cf">for</span> (g <span class="cf">in</span> groups) { <span class="co"># iterating over the vector</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>    <span class="fu">print</span>(g)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "group1"
 [1] "group2"
 [1] "group3"</code></pre>
@@ -577,58 +639,72 @@ cookieconsent.run({
 </div>
 <p>To iterate over an <strong>indexing</strong> vector, it is useful to know about the following two functions:</p>
 <ul>
-<li>
-<code>seq_along(v)</code>: generates an integer sequence from 1 to the length of the vector <code>v</code> supplied</li>
-<li>
-<code>seq_len(n)</code>: generates an integer sequence from 1 to <code>n</code>
-</li>
+<li><code>seq_along(v)</code>: generates an integer sequence from 1 to the length of the vector <code>v</code> supplied</li>
+<li><code>seq_len(n)</code>: generates an integer sequence from 1 to <code>n</code></li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(groups)) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(groups)) {</span>
 <span id="cb7-2"><a href="#cb7-2"></a>    <span class="fu">print</span>(groups[i])</span>
 <span id="cb7-3"><a href="#cb7-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "group1"
 [1] "group2"
 [1] "group3"</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">length</span>(groups))) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">length</span>(groups))) {</span>
 <span id="cb9-2"><a href="#cb9-2"></a>    <span class="fu">print</span>(groups[i])</span>
 <span id="cb9-3"><a href="#cb9-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "group1"
 [1] "group2"
 [1] "group3"</code></pre>
 </div>
 </div>
-<p>A nice feature of <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> is that it generates an empty iteration vector if the vector you’re iterating over itself has length 0.</p>
+<p>A nice feature of <code>seq_along()</code> is that it generates an empty iteration vector if the vector you’re iterating over itself has length 0.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>no_groups <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>no_groups <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="fu">seq_along</span>(no_groups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>integer(0)</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(no_groups)) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(no_groups)) {</span>
 <span id="cb13-2"><a href="#cb13-2"></a>    <span class="fu">print</span>(no_groups[i])</span>
 <span id="cb13-3"><a href="#cb13-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><code><a href="https://rdrr.io/r/base/seq.html">seq_len()</a></code> is useful for iterating over the rows of a data frame because <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> would iterate over columns:</p>
+<p><code>seq_len()</code> is useful for iterating over the rows of a data frame because <code>seq_along()</code> would iterate over columns:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>small_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">b =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">c =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>small_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">b =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">c =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>)</span>
 <span id="cb14-2"><a href="#cb14-2"></a></span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="cf">for</span> (col <span class="cf">in</span> small_data) { <span class="co"># each element is the column </span></span>
 <span id="cb14-4"><a href="#cb14-4"></a>    <span class="fu">print</span>(col)</span>
 <span id="cb14-5"><a href="#cb14-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2
 [1] 2 3
 [1] 4 5</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="cf">for</span> (r <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(small_data))) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="cf">for</span> (r <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(small_data))) {</span>
 <span id="cb16-2"><a href="#cb16-2"></a>    <span class="fu">print</span>(r)</span>
 <span id="cb16-3"><a href="#cb16-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 2</code></pre>
 </div>
@@ -640,25 +716,34 @@ cookieconsent.run({
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>When using a for loop to create/save output, we should create storage containers ahead of time with the <code><a href="https://rdrr.io/r/base/vector.html">vector()</a></code> function. This allocates memory for the output and is a more efficient use of memory.</p>
+<p>When using a for loop to create/save output, we should create storage containers ahead of time with the <code>vector()</code> function. This allocates memory for the output and is a more efficient use of memory.</p>
 </div>
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>char_storage <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"character"</span>, <span class="at">length =</span> <span class="dv">3</span>)</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>char_storage <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"character"</span>, <span class="at">length =</span> <span class="dv">3</span>)</span>
 <span id="cb18-2"><a href="#cb18-2"></a>num_storage <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">3</span>)</span>
 <span id="cb18-3"><a href="#cb18-3"></a>list_storage <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="at">length =</span> <span class="dv">3</span>)</span>
 <span id="cb18-4"><a href="#cb18-4"></a></span>
 <span id="cb18-5"><a href="#cb18-5"></a>char_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "" "" ""</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>num_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>num_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 0 0 0</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>list_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>list_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 NULL
 
@@ -668,22 +753,31 @@ NULL
 [[3]]
 NULL</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="dv">3</span>)) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="dv">3</span>)) {</span>
 <span id="cb24-2"><a href="#cb24-2"></a>    char_storage[i] <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">"Number: "</span>, i)</span>
 <span id="cb24-3"><a href="#cb24-3"></a>    num_storage[i] <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>i</span>
 <span id="cb24-4"><a href="#cb24-4"></a>    list_storage[[i]] <span class="ot">&lt;-</span> i <span class="co"># Note the [[ for subsetting here</span></span>
 <span id="cb24-5"><a href="#cb24-5"></a>}</span>
 <span id="cb24-6"><a href="#cb24-6"></a></span>
 <span id="cb24-7"><a href="#cb24-7"></a>char_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] "Number: 1" "Number: 2" "Number: 3"</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>num_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>num_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 4 6</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>list_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>list_storage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] 1
 
@@ -694,24 +788,29 @@ NULL</code></pre>
 [1] 3</code></pre>
 </div>
 </div>
-<section id="for-loops-and-memory-allocation" class="level3"><h3 class="anchored" data-anchor-id="for-loops-and-memory-allocation">
-<code>for</code> loops and memory allocation</h3>
+<section id="for-loops-and-memory-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="for-loops-and-memory-allocation"><code>for</code> loops and memory allocation</h3>
 <p>If you don’t create a storage container ahead of time, you will regret it. Let’s bench mark our code to see the difference!</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Example 1: No storage container; append new value to existing vector</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Example 1: No storage container; append new value to existing vector</span></span>
 <span id="cb30-2"><a href="#cb30-2"></a>x <span class="ot">&lt;-</span> <span class="fu">integer</span>()</span>
 <span id="cb30-3"><a href="#cb30-3"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
 <span id="cb30-4"><a href="#cb30-4"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e5</span>) {</span>
 <span id="cb30-5"><a href="#cb30-5"></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, i)</span>
 <span id="cb30-6"><a href="#cb30-6"></a>  }</span>
 <span id="cb30-7"><a href="#cb30-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
   expression                             min median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                          &lt;bch:&gt; &lt;bch:&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 for (i in 1:1e+05) { x &lt;- c(x, i) }  17.5s  17.5s    0.0570    18.6GB     71.4</code></pre>
+1 for (i in 1:1e+05) { x &lt;- c(x, i) }  46.5s  46.5s    0.0215    18.6GB     29.1</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Example 2: Using a storage container!</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Example 2: Using a storage container!</span></span>
 <span id="cb32-2"><a href="#cb32-2"></a><span class="co">#Notice median (time to run), mem_alloc (how much memory you are using), and gc (garbage collection)</span></span>
 <span id="cb32-3"><a href="#cb32-3"></a>x <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">'integer'</span>, <span class="at">length =</span> <span class="fl">1e5</span>)</span>
 <span id="cb32-4"><a href="#cb32-4"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
@@ -719,40 +818,49 @@ NULL</code></pre>
 <span id="cb32-6"><a href="#cb32-6"></a>    x[i] <span class="ot">&lt;-</span> i</span>
 <span id="cb32-7"><a href="#cb32-7"></a>  }</span>
 <span id="cb32-8"><a href="#cb32-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
   expression                            min  median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                       &lt;bch:tm&gt; &lt;bch:t&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 for (i in 1:1e+05) { x[i] &lt;- i }    2.2ms  2.46ms      328.     402KB     4.08</code></pre>
+1 for (i in 1:1e+05) { x[i] &lt;- i }   8.78ms  10.7ms      92.8     402KB     2.06</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Example 3: Vectorized function</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Example 3: Vectorized function</span></span>
 <span id="cb34-2"><a href="#cb34-2"></a><span class="co">#Notice median (time to run), mem_alloc (how much memory you are using), and gc (garbage collection)</span></span>
 <span id="cb34-3"><a href="#cb34-3"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
 <span id="cb34-4"><a href="#cb34-4"></a>  x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fl">1e5</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
 <span id="cb34-5"><a href="#cb34-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
   expression                      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                 &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 x &lt;- seq(1, 1e+05, by = 1)    272µs    520µs     1731.    1.91MB     48.8</code></pre>
+1 x &lt;- seq(1, 1e+05, by = 1)    856µs   1.11ms      821.    1.91MB     39.4</code></pre>
 </div>
 </div>
-</section></section><section id="exercises" class="level2"><h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+</section>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <p><strong>Pair programming exercises:</strong> Whoever has most recently eaten dessert (broadly interpreted) should be the driver first. Switch after Exercise 2.</p>
 <p>Write <code>for</code>-loops that do each of the following:</p>
 <ol type="1">
 <li>Prints the even numbers from 2:20
 <ul>
-<li>Then, produce the same output with the <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code> function</li>
-</ul>
-</li>
+<li>Then, produce the same output with the <code>seq()</code> function</li>
+</ul></li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># for loop</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># for loop</span></span>
 <span id="cb36-2"><a href="#cb36-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
 <span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">print</span>(i<span class="sc">*</span><span class="dv">2</span>)</span>
 <span id="cb36-4"><a href="#cb36-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 2
 [1] 4
 [1] 6
@@ -764,9 +872,12 @@ NULL</code></pre>
 [1] 18
 [1] 20</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># vectorized approach with `seq()`</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># vectorized approach with `seq()`</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">2</span>, <span class="at">to  =</span> <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code> [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
 </div>
 </div>
@@ -774,11 +885,12 @@ NULL</code></pre>
 <li>Iterates over the <code>month.name</code> vector and stores a character vector of output containing strings like “Month 1: January”, “Month 2: February”.
 <ul>
 <li>Then, produce the same output with <code>str_c()</code> only.</li>
-</ul>
-</li>
+</ul></li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># for loop</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># for loop</span></span>
 <span id="cb40-2"><a href="#cb40-2"></a>month_vector <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"character"</span>, <span class="at">length =</span> <span class="fu">length</span>(month.name))</span>
 <span id="cb40-3"><a href="#cb40-3"></a><span class="cf">for</span>(month <span class="cf">in</span> <span class="fu">seq_along</span>(month.name)){</span>
 <span id="cb40-4"><a href="#cb40-4"></a>  month_vector[month] <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">"Month "</span>, month, <span class="st">": "</span>, month.name[month])</span>
@@ -787,7 +899,8 @@ NULL</code></pre>
 <span id="cb40-7"><a href="#cb40-7"></a></span>
 <span id="cb40-8"><a href="#cb40-8"></a><span class="co"># vectorized approach with `str_c()`</span></span>
 <span id="cb40-9"><a href="#cb40-9"></a><span class="fu">str_c</span>(<span class="st">"Month "</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="st">": "</span>, month.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code> [1] "Month 1: January"   "Month 2: February"  "Month 3: March"    
  [4] "Month 4: April"     "Month 5: May"       "Month 6: June"     
  [7] "Month 7: July"      "Month 8: August"    "Month 9: September"
@@ -798,7 +911,9 @@ NULL</code></pre>
 <li>On the <code>diamonds</code> dataset, fit stratified models of price vs.&nbsp;carat, model separately estimated for each value of <code>cut</code>, and store the fitted models in a list storage container.</li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># for loop</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># for loop</span></span>
 <span id="cb42-2"><a href="#cb42-2"></a><span class="fu">data</span>(diamonds)</span>
 <span id="cb42-3"><a href="#cb42-3"></a></span>
 <span id="cb42-4"><a href="#cb42-4"></a>different_cuts <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span> <span class="fu">pull</span>(cut) <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span>
@@ -811,17 +926,22 @@ NULL</code></pre>
 <span id="cb42-11"><a href="#cb42-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section><section id="iteration-across-data-frame-columns" class="level2"><h2 class="anchored" data-anchor-id="iteration-across-data-frame-columns">Iteration <code>across</code> data frame columns</h2>
+</section>
+<section id="iteration-across-data-frame-columns" class="level2">
+<h2 class="anchored" data-anchor-id="iteration-across-data-frame-columns">Iteration <code>across</code> data frame columns</h2>
 <p>Often we will have to perform the same data wrangling on many variables (e.g., rounding numbers)</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>diamonds <span class="sc">|&gt;</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>diamonds <span class="sc">|&gt;</span></span>
 <span id="cb43-2"><a href="#cb43-2"></a>    <span class="fu">mutate</span>(</span>
 <span id="cb43-3"><a href="#cb43-3"></a>        <span class="at">carat =</span> <span class="fu">round</span>(carat, <span class="dv">1</span>),</span>
 <span id="cb43-4"><a href="#cb43-4"></a>        <span class="at">x =</span> <span class="fu">round</span>(x, <span class="dv">1</span>),</span>
 <span id="cb43-5"><a href="#cb43-5"></a>        <span class="at">y =</span> <span class="fu">round</span>(y, <span class="dv">1</span>),</span>
 <span id="cb43-6"><a href="#cb43-6"></a>        <span class="at">z =</span> <span class="fu">round</span>(z, <span class="dv">1</span>)</span>
 <span id="cb43-7"><a href="#cb43-7"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 10
    carat cut       color clarity depth table price     x     y     z
    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -840,13 +960,16 @@ NULL</code></pre>
 </div>
 <p><code>dplyr</code> provides the <code>across()</code> function for performing these repeated function calls:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Option 1: Create our own named function</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Option 1: Create our own named function</span></span>
 <span id="cb45-2"><a href="#cb45-2"></a>round_to_one <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb45-3"><a href="#cb45-3"></a>    <span class="fu">round</span>(x, <span class="at">digits =</span> <span class="dv">1</span>)</span>
 <span id="cb45-4"><a href="#cb45-4"></a>}</span>
 <span id="cb45-5"><a href="#cb45-5"></a>diamonds <span class="sc">|&gt;</span> </span>
 <span id="cb45-6"><a href="#cb45-6"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(carat, x, y, z), <span class="at">.fns =</span> round_to_one))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 10
    carat cut       color clarity depth table price     x     y     z
    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -864,10 +987,13 @@ NULL</code></pre>
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># Option 2: Use an "anonymous" or "lambda" function that isn't named/saved</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># Option 2: Use an "anonymous" or "lambda" function that isn't named/saved</span></span>
 <span id="cb47-2"><a href="#cb47-2"></a>diamonds <span class="sc">|&gt;</span> </span>
 <span id="cb47-3"><a href="#cb47-3"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(carat, x, y, z), <span class="at">.fns =</span> <span class="cf">function</span>(x) {<span class="fu">round</span>(x, <span class="at">digits =</span> <span class="dv">1</span>)} ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 10
    carat cut       color clarity depth table price     x     y     z
    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -883,7 +1009,9 @@ NULL</code></pre>
 10   0.2 Very Good H     VS1      59.4    61   338   4     4     2.4
 # ℹ 53,930 more rows</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Anonymous functions can be written in a more concise way</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Anonymous functions can be written in a more concise way</span></span>
 <span id="cb49-2"><a href="#cb49-2"></a><span class="co"># function(x){ length(unique(x)) } OR ~ length(unique(.x))</span></span>
 <span id="cb49-3"><a href="#cb49-3"></a><span class="co"># function(x,y){ length(unique(x + y)) } OR ~ length(unique(.x + .y))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -897,10 +1025,13 @@ NULL</code></pre>
 <p>What if we wanted to perform multiple transformations on each of many variables?</p>
 <p>Within the different values of diamond <code>cut</code>, let’s summarize the mean, median, and standard deviation of the numeric variables. When we look at the <code>.fns</code> argument in the <code>across()</code> documentation, we see that we can provide a <strong>list</strong> of functions:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>diamonds <span class="sc">|&gt;</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>diamonds <span class="sc">|&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2"></a>    <span class="fu">group_by</span>(cut) <span class="sc">|&gt;</span> </span>
 <span id="cb50-3"><a href="#cb50-3"></a>    <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">where</span>(is.numeric), <span class="at">.fns =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">med =</span> median, <span class="at">sd =</span> sd)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 22
   cut     carat_mean carat_med carat_sd depth_mean depth_med depth_sd table_mean
   &lt;ord&gt;        &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
@@ -917,45 +1048,56 @@ NULL</code></pre>
 </div>
 <p>What does the list of functions look like? What is the structure of this list object?</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>list_of_fcts <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">med =</span> median, <span class="at">sd =</span> sd)</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>list_of_fcts <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">med =</span> median, <span class="at">sd =</span> sd)</span>
 <span id="cb52-2"><a href="#cb52-2"></a>list_of_fcts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>$mean
 function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x000001a1f9c79078&gt;
+&lt;bytecode: 0x0000025ae2c58ea8&gt;
 &lt;environment: namespace:base&gt;
 
 $med
 function (x, na.rm = FALSE, ...) 
 UseMethod("median")
-&lt;bytecode: 0x000001a1f8d4f3c0&gt;
+&lt;bytecode: 0x0000025ae1d361c8&gt;
 &lt;environment: namespace:stats&gt;
 
 $sd
 function (x, na.rm = FALSE) 
 sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
     na.rm = na.rm))
-&lt;bytecode: 0x000001a206a24c48&gt;
+&lt;bytecode: 0x0000025aee48cd60&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">str</span>(list_of_fcts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">str</span>(list_of_fcts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>List of 3
  $ mean:function (x, ...)  
  $ med :function (x, na.rm = FALSE, ...)  
  $ sd  :function (x, na.rm = FALSE)  </code></pre>
 </div>
 </div>
-</section><section id="exercises-1" class="level2"><h2 class="anchored" data-anchor-id="exercises-1">Exercises</h2>
+</section>
+<section id="exercises-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-1">Exercises</h2>
 <p>Using the <code>diamonds</code> dataset:</p>
 <ol type="1">
 <li>Transform the <code>x</code>, <code>y</code>, and <code>z</code> columns so that the units of millimeters are displayed (e.g., “4.0 mm”).</li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
 <span id="cb56-2"><a href="#cb56-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(x,y,z), <span class="at">.fns =</span> <span class="cf">function</span>(x){<span class="fu">str_c</span>(x, <span class="st">" mm"</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 10
    carat cut       color clarity depth table price x       y       z      
    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
@@ -975,15 +1117,16 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <ol start="2" type="1">
 <li>Convert all numeric columns into character columns.
 <ul>
-<li>Hint: type <code>is.</code> and hit Tab in the Console. Scroll through the function options. Do the same with <code>as.</code>
-</li>
-</ul>
-</li>
+<li>Hint: type <code>is.</code> and hit Tab in the Console. Scroll through the function options. Do the same with <code>as.</code></li>
+</ul></li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>diamonds <span class="sc">%&gt;%</span> </span>
 <span id="cb58-2"><a href="#cb58-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">where</span>(is.numeric), <span class="at">.fns =</span> as.character))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,940 × 10
    carat cut       color clarity depth table price x     y     z    
    &lt;chr&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1000,7 +1143,9 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 # ℹ 53,930 more rows</code></pre>
 </div>
 </div>
-</section><section id="case-study-performing-many-different-versions-of-an-analysis" class="level2"><h2 class="anchored" data-anchor-id="case-study-performing-many-different-versions-of-an-analysis">Case study: performing many different versions of an analysis</h2>
+</section>
+<section id="case-study-performing-many-different-versions-of-an-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-performing-many-different-versions-of-an-analysis">Case study: performing many different versions of an analysis</h2>
 <p>One of my most common use cases for writing functions and iteration/looping is to perform some exploration or modeling repeatedly for several different “settings”.</p>
 <p>For example, our broad goal might be to fit a linear regression model to our data. However, there are often multiple choices that we have to make in practice:</p>
 <ul>
@@ -1011,13 +1156,13 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 </ul>
 <p>We can map any number of these choices to <strong>arguments</strong> in a custom model-fitting function:</p>
 <ul>
-<li>
-<code>impute</code>: TRUE or FALSE</li>
-<li>
-<code>filter_to</code>: This could be a string description like “All cases”, “Group 1”, or “Groups 1 and 2”</li>
+<li><code>impute</code>: TRUE or FALSE</li>
+<li><code>filter_to</code>: This could be a string description like “All cases”, “Group 1”, or “Groups 1 and 2”</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>fit_model <span class="ot">&lt;-</span> <span class="cf">function</span>(data, impute, filter_to) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>fit_model <span class="ot">&lt;-</span> <span class="cf">function</span>(data, impute, filter_to) {</span>
 <span id="cb60-2"><a href="#cb60-2"></a>    <span class="cf">if</span> (impute) {</span>
 <span id="cb60-3"><a href="#cb60-3"></a>        data <span class="ot">&lt;-</span> <span class="fu">some_imputation_function</span>(data)</span>
 <span id="cb60-4"><a href="#cb60-4"></a>    }</span>
@@ -1037,12 +1182,15 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <p>The <code>tidyr</code> package has a useful function called <code>crossing()</code> that is useful for generating argument combinations.</p>
 <p>For each argument, we specify all possible values for that argument. <code>crossing()</code> generates all combinations:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>df_arg_combos <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>df_arg_combos <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
 <span id="cb61-2"><a href="#cb61-2"></a>    <span class="at">impute =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
 <span id="cb61-3"><a href="#cb61-3"></a>    <span class="at">filter_to =</span> <span class="fu">c</span>(<span class="st">"All cases"</span>, <span class="st">"Group 1"</span>, <span class="st">"Groups 1 and 2"</span>)</span>
 <span id="cb61-4"><a href="#cb61-4"></a>)</span>
 <span id="cb61-5"><a href="#cb61-5"></a>df_arg_combos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   impute filter_to     
   &lt;lgl&gt;  &lt;chr&gt;         
@@ -1053,13 +1201,16 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 5 TRUE   Group 1       
 6 TRUE   Groups 1 and 2</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># Another example</span></span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># Another example</span></span>
 <span id="cb63-2"><a href="#cb63-2"></a><span class="fu">crossing</span>(</span>
 <span id="cb63-3"><a href="#cb63-3"></a>    <span class="at">option1 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
 <span id="cb63-4"><a href="#cb63-4"></a>    <span class="at">option2 =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
 <span id="cb63-5"><a href="#cb63-5"></a>    <span class="at">option3 =</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>)</span>
 <span id="cb63-6"><a href="#cb63-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 3
    option1 option2 option3
      &lt;int&gt; &lt;lgl&gt;   &lt;chr&gt;  
@@ -1084,20 +1235,18 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 </div>
 </div>
 <p>With iteration in our toobox, we can iterate the <code>fit_model()</code> function over the combinations in <code>df_arg_combos</code>.</p>
-</section><section id="exercises-2" class="level2"><h2 class="anchored" data-anchor-id="exercises-2">Exercises</h2>
+</section>
+<section id="exercises-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercises-2">Exercises</h2>
 <p><strong>Goal:</strong> In the <code>diamonds</code> dataset, we want to understand the relationship between <code>price</code> and size (<code>carat</code>). We want to explore variation along two choices:</p>
 <ul>
 <li>The variables included in the model. We’ll explore 3 sets of variables:
 <ul>
 <li>No further variables (just <code>price</code> and <code>carat</code>)</li>
-<li>Adjusting for <code>cut</code>
-</li>
-<li>Adjusting for <code>cut</code> and <code>clarity</code>
-</li>
-<li>Adjusting for <code>cut</code>, <code>clarity</code>, and <code>color</code>
-</li>
-</ul>
-</li>
+<li>Adjusting for <code>cut</code></li>
+<li>Adjusting for <code>cut</code> and <code>clarity</code></li>
+<li>Adjusting for <code>cut</code>, <code>clarity</code>, and <code>color</code></li>
+</ul></li>
 <li>Whether or not to remove outliers in the <code>carat</code> variable. We’ll define outliers as cases whose <code>carat</code> is over 3 SDs away from the mean.</li>
 </ul>
 <p>Work with your partner on the following exercises. As you work, make note of what is challenging and any helpful thought processes/strategies that arise from the collaboration.</p>
@@ -1105,13 +1254,16 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <li>Use <code>crossing()</code> to create the data frame of argument combinations for our analyses. Call it <code>df_arg_combos</code>. Note that you can create a list of <strong>formula</strong> objects in R with <code>c(y ~ x1, y ~ x1 + x2)</code>. (Something like this will be the right hand side of an argument to <code>crossing()</code>.)</li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>df_arg_combos <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>df_arg_combos <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
 <span id="cb65-2"><a href="#cb65-2"></a>  <span class="at">formulas =</span> <span class="fu">c</span>(price <span class="sc">~</span> carat, price <span class="sc">~</span> carat <span class="sc">+</span> cut, price <span class="sc">~</span> carat<span class="sc">+</span> cut <span class="sc">+</span>clarity, price <span class="sc">~</span> carat <span class="sc">+</span> cut <span class="sc">+</span> clarity <span class="sc">+</span> color),</span>
 <span id="cb65-3"><a href="#cb65-3"></a>  <span class="at">outliers =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
 <span id="cb65-4"><a href="#cb65-4"></a>)</span>
 <span id="cb65-5"><a href="#cb65-5"></a></span>
 <span id="cb65-6"><a href="#cb65-6"></a>df_arg_combos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
   formulas  outliers
   &lt;list&gt;    &lt;lgl&gt;   
@@ -1129,12 +1281,15 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <li>Write a function called <code>remove_outliers</code> that removes outliers in a dataset. The user should be able to supply the dataset (<code>data</code>), the variable to remove outliers in (<code>what_var</code>), and a threshold on the number of SDs away from the mean used to define outliers (<code>sd_thresh</code>). Write your function so that it runs as follows: <code>remove_outliers(diamonds, what_var = carat, sd_thresh = 3)</code>.</li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>remove_outliers <span class="ot">&lt;-</span> <span class="cf">function</span>(data, what_var, sd_thresh){</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>remove_outliers <span class="ot">&lt;-</span> <span class="cf">function</span>(data, what_var, sd_thresh){</span>
 <span id="cb67-2"><a href="#cb67-2"></a>  data <span class="sc">|&gt;</span> </span>
 <span id="cb67-3"><a href="#cb67-3"></a>    <span class="fu">filter</span>({{what_var}} <span class="sc">&gt;</span> <span class="fu">mean</span>({{what_var}})<span class="sc">-</span> (sd_thresh <span class="sc">*</span> <span class="fu">sd</span>({{what_var}})), {{what_var}} <span class="sc">&lt;</span> <span class="fu">mean</span>({{what_var}})<span class="sc">+</span> (sd_thresh <span class="sc">*</span> <span class="fu">sd</span>({{what_var}})))</span>
 <span id="cb67-4"><a href="#cb67-4"></a>}</span>
 <span id="cb67-5"><a href="#cb67-5"></a><span class="fu">remove_outliers</span>(diamonds, <span class="at">what_var =</span> carat, <span class="at">sd_thresh =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 53,501 × 10
    carat cut       color clarity depth table price     x     y     z
    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1152,7 +1307,9 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>remove_outliers <span class="ot">&lt;-</span> <span class="cf">function</span>(data, what_var, sd_thresh) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>remove_outliers <span class="ot">&lt;-</span> <span class="cf">function</span>(data, what_var, sd_thresh) {</span>
 <span id="cb69-2"><a href="#cb69-2"></a>    data <span class="sc">|&gt;</span> </span>
 <span id="cb69-3"><a href="#cb69-3"></a>        <span class="fu">mutate</span>(<span class="at">zscore =</span> ({{ what_var }} <span class="sc">-</span> <span class="fu">mean</span>({{ what_var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))<span class="sc">/</span><span class="fu">sd</span>({{ what_var }}, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb69-4"><a href="#cb69-4"></a>        <span class="fu">filter</span>(zscore <span class="sc">&lt;=</span> sd_thresh)</span>
@@ -1163,7 +1320,9 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <li>Write a function called <code>fit_model</code> that implements the different settings for our <code>diamonds</code> analysis.</li>
 </ol>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>fit_model <span class="ot">&lt;-</span> <span class="cf">function</span>(data, mod_formula, remove_outliers) {</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>fit_model <span class="ot">&lt;-</span> <span class="cf">function</span>(data, mod_formula, remove_outliers) {</span>
 <span id="cb70-2"><a href="#cb70-2"></a>    <span class="cf">if</span> (remove_outliers) {</span>
 <span id="cb70-3"><a href="#cb70-3"></a>        data_clean <span class="ot">&lt;-</span> <span class="fu">remove_outliers</span>(data, <span class="at">what_var =</span> carat, <span class="at">sd_thresh =</span> <span class="dv">3</span>)</span>
 <span id="cb70-4"><a href="#cb70-4"></a>    } <span class="cf">else</span> {</span>
@@ -1185,15 +1344,13 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 </ul>
 <p>Note that in <code>df_arg_combos</code>:</p>
 <ul>
-<li>
-<code>mod_formula</code>: this column is a <strong>list</strong> and you can extract the 1st element with <code>[[1]]</code>
-</li>
-<li>
-<code>remove_outliers</code>: this column is a <strong>vector</strong> and you can extract the 1st element with <code>[1]</code>
-</li>
+<li><code>mod_formula</code>: this column is a <strong>list</strong> and you can extract the 1st element with <code>[[1]]</code></li>
+<li><code>remove_outliers</code>: this column is a <strong>vector</strong> and you can extract the 1st element with <code>[1]</code></li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>lin_mod_res_for <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> <span class="fu">nrow</span>(df_arg_combos))</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>lin_mod_res_for <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> <span class="fu">nrow</span>(df_arg_combos))</span>
 <span id="cb71-2"><a href="#cb71-2"></a></span>
 <span id="cb71-3"><a href="#cb71-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(lin_mod_res_for)) {</span>
 <span id="cb71-4"><a href="#cb71-4"></a>    this_formula <span class="ot">&lt;-</span> df_arg_combos<span class="sc">$</span>mod_formula[[i]] <span class="co"># Double [[ for the **list** of formulas</span></span>
@@ -1206,7 +1363,9 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 <span id="cb71-11"><a href="#cb71-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section><section id="done" class="level2"><h2 class="anchored" data-anchor-id="done">Done!</h2>
+</section>
+<section id="done" class="level2">
+<h2 class="anchored" data-anchor-id="done">Done!</h2>
 <ul>
 <li>Check the ICA Instructions for how to (a) push your code to GitHub and (b) update your portfolio website</li>
 </ul>
@@ -1214,7 +1373,10 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 
 <!-- -->
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1681,7 +1843,9 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
       }
     }
   });
-  </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
       <a href="../../src/ica/10-base-r-notes.html" class="pagination-link" aria-label="10 Base R">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">10 Base R</span></span>
       </a>          
@@ -2173,7 +2337,8 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
@@ -2185,6 +2350,8 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
     </div>
   </div>
 </footer>
+
+
 
 
 <script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
