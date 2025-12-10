@@ -16,6 +16,7 @@ By the end of this lesson, you should be able to:
 ```{r setup_14, echo=FALSE, message=FALSE}
 library(tidyverse)
 library(httr2)
+library(httr)
 library(xml2)
 ```
 
@@ -125,19 +126,14 @@ Read in the key with the following code:
 
 
 ```{r read_census_api_key2}
-#| eval: false
 census_api_key <- readLines("census_api_key.txt")
 ```
 
 ### Navigating API documentation
 
-Navigate to the [Census API user guide](https://www.census.gov/data/developers/guidance/api-user-guide.html) and click on the "Example API Queries" tab.
+Navigate to the [Census API user guide](https://www.census.gov/data/developers/guidance/api-user-guide.html) and click on the "Example API Queries" tab.  Let's look at the Population Estimates Example and the American Community Survey (ACS) Example. These examples walk us through the steps to incrementally build up a URL to obtain desired data. This URL is known as a web API **request**. 
 
-Let's look at the Population Estimates Example and the American Community Survey (ACS) Example. 
-
-These examples walk us through the steps to incrementally build up a URL to obtain desired data. This URL is known as a web API **request**. 
-
-https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M&for=state:*
+`https://api.census.gov/data/2019/acs/acs1?get=NAME,B02015_009E,B02015_009M&for=state:*`
 
 For this request, 
 
@@ -145,11 +141,8 @@ For this request,
 - we can adjust the **query string** to get different variables (`get`) and for different states (`for`)
   
 `?get=NAME,B02015_009E,B02015_009M&for=state:*` 
-    
 
-Typically, each of these URL components will be specified in the API documentation. 
-
-Sometimes, the scheme, hostname, and path (`https://api.census.gov/data/2019/acs/acs1`) will be referred to as the **[endpoint](https://en.wikipedia.org/wiki/Web_API#Endpoints)** for the API call.
+Typically, each of these URL components will be specified in the API documentation. Sometimes, the scheme, hostname, and path (`https://api.census.gov/data/2019/acs/acs1`) will be referred to as the **[endpoint](https://en.wikipedia.org/wiki/Web_API#Endpoints)** for the API call.
 
 ### Building a URL with `httr2`
 
@@ -166,12 +159,10 @@ We will use the `httr2` package to build up a full URL from its parts because of
 ```{r httr2_census}
 req <- request("https://api.census.gov") |> 
     req_url_path_append("data") |> 
-    req_url_path_append("2009") |> 
+    req_url_path_append("2019") |> 
     req_url_path_append("acs") |> 
     req_url_path_append("acs1") |> 
     req_url_query(get = c("NAME", "B02015_009E", "B02015_009M"), `for` = I("state:*"), key = census_api_key, .multi = "comma")
-
-print(req)
 ```
 
 **Why would we ever use these steps instead of just using the full URL as a string?**
@@ -244,7 +235,7 @@ When we use `req_perform()`, we see from `Content-Type` that the format of the r
 - XML (Extensible Markup Language) is a tree structure of named nodes and attributes.
 - We can use `resp_body_xml()` to read in the XML as an R object.
 
-```{r bgg_response}
+```{r bgg_response, eval=FALSE}
 resp <- req_perform(req)
 resp
 resp <- resp_body_xml(resp)
@@ -255,7 +246,7 @@ The XML output is not packaged in a nice way. (We'd love to have a data frame.) 
 
 Let's first use the `xml_structure()` function to see how information is organized:
 
-```{r xml_structure}
+```{r xml_structure, eval = FALSE}
 xml_structure(resp)
 ```
 
@@ -269,7 +260,7 @@ The key navigation and extraction functions in `xml2` are:
 - `xml_attr()`: Selects the value of an attribute (the information to the right of the `=` in quotes)
     - `<node_name attribute_name1="attribute_value1" attribute_name2="attribute_value2">`
 
-```{r xml_nav_extract}
+```{r xml_nav_extract, eval=FALSE}
 # Get the item nodes in 2 different ways
 resp |> xml_find_all("item")
 resp |> xml_children()
@@ -290,12 +281,7 @@ resp |> xml_find_all("item/name") |> xml_attr("type")
 1. Get the board game name (e.g., "Murder Mystery..." and  "Robinson Crusoe")
 2. Get the board game ID number (e.g., 63495, 40175)
 
-```{r}
-resp |> xml_find_all("item/name")  |> xml_attr("value")
-
-resp %>%  xml_find_all("item") %>% xml_attr("id")
-```
-
+> This activity wasn't working. It seems to be a problem with the API
 
 ### New York Times API
 
@@ -310,8 +296,7 @@ Once you have signed up, verified your email, log back in to https://developer.n
 As with your census API key, save this key in a `.txt` file, and read it in and store this in a variable called `times_key`.  📌 Again, don't commit this file to GitHub.  Make Git ignores it via GitHub Desktop (**Right click** the file --> select **Ignore file (add to .gitignore)**.
 
 ```{r nyt_key_2}
-#| eval: false
-times_key <- read_lines("nyt_api_key.txt")
+times_key <- read_lines("times_key")
 ```
 
 
@@ -339,7 +324,6 @@ The scheme, hostname, and path (`http://api.nytimes.com/svc/search/v2/articlesea
 We can use the `httr2` package to build up a full URL from its parts:
 
 ```{r httr2_nyt}
-#| eval: false
 req <- request("http://api.nytimes.com") |> 
     req_url_path_append("svc") |> 
     req_url_path_append("search") |> 
@@ -352,7 +336,6 @@ req <- request("http://api.nytimes.com") |>
 We can write a function to generate the URL for a user-specified query:
 
 ```{r create_nyt_url}
-#| eval: false
 create_nyt_url <- function(query, key) {
     request("http://api.nytimes.com") |> 
         req_url_path_append("svc") |> 
@@ -371,7 +354,6 @@ Let's use this function to find articles related to:
 Let's see how these queries are translated into the URLs:
 
 ```{r use_create_nyt_url}
-#| eval: false
 req_fb <- create_nyt_url(query = "Ferris Bueller's Day Off", key = times_key)
 req_pt <- create_nyt_url(query = "Penn & Teller", key = times_key)
 ```
@@ -379,7 +361,6 @@ req_pt <- create_nyt_url(query = "Penn & Teller", key = times_key)
 We can use `req_perform()` to send out the request and `resp_body_json()` to parse the resulting JSON:
 
 ```{r nyt_responses}
-#| eval: false
 resp_pt <- req_pt |> req_perform() |> resp_body_json(simplifyVector = TRUE)
 ```
 
@@ -401,7 +382,6 @@ Using base R subsetting, we can access elements of a list in three ways:
 - By *position* with double square brackets `[[`:
 
 ```{r list_access1}
-#| eval: false
 # This gets the first element of the list
 resp_pt[[1]]
 ```
@@ -410,7 +390,6 @@ resp_pt[[1]]
 - By *name* with double square brackets `[[`: (note that list elements are not always named, so this won't always be possible)
 
 ```{r list_access2}
-#| eval: false
 # Accessing by name directly
 resp_pt[["status"]]
 
@@ -422,14 +401,12 @@ resp_pt[[which_element]]
 - By *name* with a dollar sign `$`: (Helpful tip: For this mode of access, RStudio allows tab completion to fill in the full name)
 
 ```{r list_access3}
-#| eval: false
 resp_pt$status
 ```
 
 We can retrieve these *nested* attributes by sequentially accessing the object keys from the outside in. For example, the `meta` element would be accessed as follows:
 
 ```{r list_access4}
-#| eval: false
 resp_pt$response$meta
 ```
 
@@ -439,6 +416,15 @@ resp_pt$response$meta
 - the `copyright` key
 - the number of `hits` (number of search results) within the `meta` object
 - the abstracts and leading paragraphs of the articles found in the search
+```{r}
+resp_pt$copyright
+
+resp_pt$response$meta$hits
+
+resp_pt$response$docs$abstract
+resp_pt$response$docs$lead_paragraph
+```
+
 
 ## Done!
 
