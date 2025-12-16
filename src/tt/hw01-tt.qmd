@@ -54,7 +54,7 @@ ggplot(aes(x = reorder(stateProvince, -n), y = n))+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-```{r fig.cap = "Map of Frog Recording Locations Nico Thorn 9/9/2025 Source: TidyTuesday", fig.alt= "Map displays location of FrogID recordings. Most of the recordings seem to be around the coast line areas of Australia, and away from the desert."}
+```{r fig.cap = "Nico Thorn 9/9/2025 Data Source: TidyTuesday", fig.alt= "Map displays location of FrogID recordings. Most of the recordings seem to be around the coast line areas of Australia, and away from the desert."}
 title <- "
 <style>
   .custom-title {
