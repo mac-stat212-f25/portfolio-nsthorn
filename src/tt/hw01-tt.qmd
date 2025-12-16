@@ -1,0 +1,129 @@
+---
+title: "Homework 01"
+---
+
+
+## TidyTuesday Section
+
+Explore the week's [TidyTuesday](https://github.com/rfordatascience/tidytuesday) challenge. Develop a research question, then answer it through a short data story with [effective visualization(s)]({{< var effective-viz-url >}}).  Provide sufficient background for readers to grasp your narrative.
+
+```{r}
+library(tidyverse)
+library(hms)
+library(leaflet)
+library(forcats)
+```
+
+
+```{r}
+frogID_data <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frogID_data.csv')
+frog_names <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frog_names.csv')
+```
+
+# Background
+This TidyTuesday data set comes from the sixth annual release of FrogID data. FrogID data identifies frog calls. Anyone can record and submit their recording of a frog call in Australia to FrogID data.
+
+
+This data set includes two different tables, the first with information on different types of frogs, the second of different recordings of frog calls.
+
+
+The frog_names table includes information on a species of frog including its subfamily, tribe, scientific name, common name, and secondary common name.
+
+
+The frogID_data table includes information about a specific interaction with a frog including an event ID, an occurrence ID, latitude of the occurrence, longitude of the occurrence, scientific name of the frog, date of the event, time of the event, time zone, coordinates uncertainty, who recorded it, and the province the occurrence was recorded in. 
+
+
+# Where are the most frog recorded?
+
+FrogID can provide interesting insights into the life of frogs, including where they live. Knowing what areas frogs are recorded in help us know what climates they prefer and the types of habitats that they have become adapted to. 
+
+
+Collection of this data could help conservationists focus there target areas to those that would help the largest number of frog species.
+
+
+```{r fig.alt = "The Bargraph shows the number of frog recordings in each Austrialian province. The province with the most recordings is New South Wales with just under 60000 recorings. The rest, in decending order as Victoria, Queensland, Western Australia, South Ausstralia, Tasmania, Northern Territory, Austrailian Capital Terriroy, and the Other Territories.", fig.cap = "Bargraph displaying the number of frog recordings in each Australian province. Nico Thorn 9/9/2025 Source: TidyTuesday"}
+frogID_data %>% 
+  count(stateProvince) %>% 
+  arrange(desc(n)) %>% 
+ggplot(aes(x = reorder(stateProvince, -n), y = n))+
+  geom_bar(stat = "identity")+
+  labs(title = "Number of Frog Recordings in Australian Provinces")+
+  xlab("Province Name")+
+  ylab("Number of Frog Recordings")+
+  theme_classic()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+```{r fig.cap = "Nico Thorn 9/9/2025 Data Source: TidyTuesday", fig.alt= "Map displays location of FrogID recordings. Most of the recordings seem to be around the coast line areas of Australia, and away from the desert."}
+title <- "
+<style>
+  .custom-title {
+    color: #34495e;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    background-color: rgba(204, 224, 255, 0.9);
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.custom-title:hover {
+    background-color: rgba(204, 224, 255, 0.7);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+</style>
+<h1>
+  Frog Recording Occurance Locations
+</h1>"
+
+frogID_data %>%
+  mutate(longitude = decimalLongitude, latitude = decimalLatitude) %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addCircles() %>% 
+  addControl(html = title, position = "topright", className = "custom-title") 
+```
+
+
+
+Frogs appear to prefer the provinces of New South Wales, Victoria, and Queensland as to other parts of Australia as seen in the bar graph above. The map above provides additional information, namely that the frogs tend to prefer the coastline areas of Australia.
+
+
+Given that many frogs require high levels of moisture and humidity in their environments, it makes sense, due to a large portion of Australia being dry desert, the frogs would congregate in theses areas. Knowing this, conservationists could focus there efforts on protecting frog species along the coast lines of New South Wales, Victoria, and Queensland provinces.
+
+
+# In these provinces, what is the distribution of frog species like?
+
+In addition to knowing where the frogs are located, knowing the different types of frogs in an ecosystem can also be vital for conservationist efforts.
+
+```{r fig.cap = "Bar charts of the different frog genera in the three provinces with the most frog recordings. Nico Thorn 9/9/2025 Source: TidyTuesday", fig.alt="Bar charts of the different frog genera in the three provinces with the most frog recordings. All three of these provinces, Litoria, Crinia, Limnodynastes where among the top three most prevalent frog Genera"}
+frogID_data %>% 
+  filter(stateProvince %in% c("New South Wales", "Victoria", "Queensland" )) %>%
+  separate(scientificName, c("genus", "Species"), sep = " ") %>% 
+  ggplot(aes(x = stateProvince)) +
+  geom_bar()+
+  facet_wrap(~genus)+
+  labs(title = "Distribution of Frog Genera in FrogID Recordings")+
+  xlab("Province Name")+
+  ylab("Number of Frog Recordings")+
+  theme_classic()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  
+```
+
+
+In all three of these provinces, Litoria, Crinia, Limnodynastes where among the top three most prevalent frog Genera. Frogs of similar Genera may have similar environmental requirements, and may be effected in similar ways. Focusing on these broad requirements for all these Genera could help decide what environmental issues conservationists should argue for the most.
+
+
+# Conclusion
+
+
+Conservationists could use recording data from FrogID to learn more about the locations and the environmental issues might be the most effective to save and preserve the largest number of frogs, and frog species.
+
+
+# Resources
+
+https://r-graph-gallery.com/package/leaflet.html was used for help on how to add a title to a leaflet map
+
+Package documentation was also utilized when creating visuals.
+
+Knowledge on frogs comes from myself, since I have been studying frogs and herpetology for many years now.
